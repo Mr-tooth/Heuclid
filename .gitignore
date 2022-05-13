@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# Cmake Build Folders
+build/
+src/Test/build/

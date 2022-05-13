@@ -1,5 +1,0 @@
-# ninja log v5
-1	236	6740595600246797	CMakeFiles/Heuclid.dir/src/Heuclid/euclid/orientation/Orientation2D.cpp.obj	cf746638df875951
-5	238	6740595600226851	CMakeFiles/Heuclid.dir/src/Heuclid/euclid/tools/HeuclidCoreTool.cpp.obj	c10ba5889cf2203f
-1	62	0	CMakeFiles/install.util	ca99278faad987eb
-238	282	6740595600709584	Heuclid.lib	c438b754594a6d6a

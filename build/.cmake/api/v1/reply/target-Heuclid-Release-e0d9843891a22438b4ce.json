@@ -1,0 +1,235 @@
+{
+	"archive" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "/machine:x64",
+				"role" : "flags"
+			}
+		]
+	},
+	"artifacts" : 
+	[
+		{
+			"path" : "Heuclid.lib"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"add_compile_options",
+			"include_directories",
+			"include"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt",
+			"cmake/HeuclidConfig.cmake"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 31,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 9,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 10,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 14,
+				"parent" : 0
+			},
+			{
+				"file" : 1,
+				"parent" : 4
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 7,
+				"parent" : 5
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 8,
+				"parent" : 5
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 9,
+				"parent" : 5
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 10,
+				"parent" : 5
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 11,
+				"parent" : 5
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 16,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 17,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 18,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 19,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 20,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG  "
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "-std=c++14"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "/MT"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "/O2"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 6,
+					"path" : "D:/CodeStorage/HTool/Heuclid/../Heuclid/include"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "D:/CodeStorage/HTool/Heuclid/../Heuclid/include/Heuclid"
+				},
+				{
+					"backtrace" : 8,
+					"path" : "D:/CodeStorage/HTool/Heuclid/../Heuclid/include/Heuclid/euclid"
+				},
+				{
+					"backtrace" : 9,
+					"path" : "D:/CodeStorage/HTool/Heuclid/../Heuclid/include/Heuclid/geometry"
+				},
+				{
+					"backtrace" : 10,
+					"path" : "D:/CodeStorage/HTool/Heuclid/../Heuclid/include/Heuclid/title"
+				},
+				{
+					"backtrace" : 11,
+					"path" : "D:/CodeStorage/HTool/Heuclid/./include"
+				},
+				{
+					"backtrace" : 12,
+					"path" : "D:/CodeStorage/HTool/Heuclid/./include/Heuclid"
+				},
+				{
+					"backtrace" : 13,
+					"path" : "D:/CodeStorage/HTool/Heuclid/./include/Heuclid/euclid"
+				},
+				{
+					"backtrace" : 14,
+					"path" : "D:/CodeStorage/HTool/Heuclid/./include/Heuclid/geometry"
+				},
+				{
+					"backtrace" : 15,
+					"path" : "D:/CodeStorage/HTool/Heuclid/./include/Heuclid/title"
+				}
+			],
+			"language" : "CXX",
+			"sourceIndexes" : 
+			[
+				0,
+				1
+			]
+		}
+	],
+	"id" : "Heuclid::@6890427a1f51a3e7e1df",
+	"name" : "Heuclid",
+	"nameOnDisk" : "Heuclid.lib",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/Heuclid/euclid/orientation/Orientation2D.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/Heuclid/euclid/tools/HeuclidCoreTool.cpp",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "STATIC_LIBRARY"
+}

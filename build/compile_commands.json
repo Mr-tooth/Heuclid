@@ -1,0 +1,13 @@
+[
+{
+  "directory": "D:/CodeStorage/HTool/Heuclid/build",
+  "command": "C:\\PROGRA~2\\MICROS~1.0\\VC\\bin\\amd64\\cl.exe  /nologo /TP  -I..\\..\\Heuclid\\include -I..\\..\\Heuclid\\include\\Heuclid -I..\\..\\Heuclid\\include\\Heuclid\\euclid -I..\\..\\Heuclid\\include\\Heuclid\\geometry -I..\\..\\Heuclid\\include\\Heuclid\\title -I..\\.\\include -I..\\.\\include\\Heuclid -I..\\.\\include\\Heuclid\\euclid -I..\\.\\include\\Heuclid\\geometry -I..\\.\\include\\Heuclid\\title  /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG   -std=c++14 /MT /O2 /FoCMakeFiles\\Heuclid.dir\\src\\Heuclid\\euclid\\orientation\\Orientation2D.cpp.obj /FdTARGET_COMPILE_PDB /FS -c D:\\CodeStorage\\HTool\\Heuclid\\src\\Heuclid\\euclid\\orientation\\Orientation2D.cpp",
+  "file": "D:/CodeStorage/HTool/Heuclid/src/Heuclid/euclid/orientation/Orientation2D.cpp"
+},
+
+{
+  "directory": "D:/CodeStorage/HTool/Heuclid/build",
+  "command": "C:\\PROGRA~2\\MICROS~1.0\\VC\\bin\\amd64\\cl.exe  /nologo /TP  -I..\\..\\Heuclid\\include -I..\\..\\Heuclid\\include\\Heuclid -I..\\..\\Heuclid\\include\\Heuclid\\euclid -I..\\..\\Heuclid\\include\\Heuclid\\geometry -I..\\..\\Heuclid\\include\\Heuclid\\title -I..\\.\\include -I..\\.\\include\\Heuclid -I..\\.\\include\\Heuclid\\euclid -I..\\.\\include\\Heuclid\\geometry -I..\\.\\include\\Heuclid\\title  /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG   -std=c++14 /MT /O2 /FoCMakeFiles\\Heuclid.dir\\src\\Heuclid\\euclid\\tools\\HeuclidCoreTool.cpp.obj /FdTARGET_COMPILE_PDB /FS -c D:\\CodeStorage\\HTool\\Heuclid\\src\\Heuclid\\euclid\\tools\\HeuclidCoreTool.cpp",
+  "file": "D:/CodeStorage/HTool/Heuclid/src/Heuclid/euclid/tools/HeuclidCoreTool.cpp"
+}
+]

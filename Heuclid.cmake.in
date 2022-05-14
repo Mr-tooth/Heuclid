@@ -8,6 +8,6 @@ set(HEUCLID_INCLUDE_DIRS    "@Heuclid_include_dirs@")
 set(HEUCLID_LINK_DIRS       "@Heuclid_link_dirs@"   )
 
 # include paths
-include_directories(${HEUCLID_INCLUDE_DIRS} Include ${HEUCLID_INCLUDE_DIRS} and ${HEUCLID_LINK_DIRS})
+include_directories(${HEUCLID_INCLUDE_DIRS})
 link_directories(${HEUCLID_LINK_DIRS})
-message("--[Heuclid]: Package found!")
+message("--[Heuclid]: Package found! Include ${HEUCLID_INCLUDE_DIRS} and ${HEUCLID_LINK_DIRS}")

@@ -34,8 +34,8 @@ public:
     // {return (this->getX()==other.getX()&&
     //          this->getY()==other.getY());};
 
-    bool epsilonEquals(const Point2D& other, const double& epsilon);
-    bool geometricallyEquals(const Point2D& other, const double& epsilon);
+    bool epsilonEquals(const Point2D& other, const double& epsilon) const;
+    bool geometricallyEquals(const Point2D& other, const double& epsilon) const;
     bool epsilonZero(const double& epsilon);
     inline void operator= (const Point2D& other) {this->x =other.x;this->y = other.y;};
     //inline void operator==(const Point2D& other) {return (this->x==other.x&&this->y==other.y);};
@@ -46,13 +46,13 @@ private:
 };
 
 template<typename dataType>
-bool Point2D<dataType>::epsilonEquals(const Point2D& other, const double& epsilon)
+bool Point2D<dataType>::epsilonEquals(const Point2D& other, const double& epsilon) const
 {
     return (abs(this->getX()-other.getX())<=epsilon && abs(this->getY()-other.getY())<=epsilon);
 }
 
 template<typename dataType>
-bool Point2D<dataType>::geometricallyEquals(const Point2D& other, const double& epsilon)
+bool Point2D<dataType>::geometricallyEquals(const Point2D& other, const double& epsilon) const
 {
     double dx = this->getX()-other.getX();
     double dy = this->getY()-other.getY();

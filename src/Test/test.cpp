@@ -4,6 +4,9 @@
 #include <Heuclid\euclid\tools\QuaternionTool.h>
 #include <iostream>
 
+#include <Heuclid\geometry\ConvexPolygon2D.h>
+#include <Heuclid\geometry\tools\HeuclidPolygonTools.h>
+
 int main()
 {
    
@@ -65,5 +68,12 @@ int main()
     std::cout<<"yaw is "<<q5.getYaw()<<std::endl;
     std::cout<<"pitch is "<<q5.getPitch()<<std::endl;
     std::cout<<"roll is "<<q5.getRoll()<<std::endl;
+
+
+
+
+    // polygon check
+    ljh::mathlib::HeuclidGeometryPolygonTools heuclidGeometryPolygonTools;
+    
     return 0;
 }

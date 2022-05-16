@@ -25,11 +25,15 @@ aux_source_directory(./src/Heuclid/euclid/tools SRC_FILES)
 aux_source_directory(./src/Heuclid/euclid/tuple2D SRC_FILES)
 aux_source_directory(./src/Heuclid/euclid/tuple3D SRC_FILES)
 aux_source_directory(./src/Heuclid/euclid/tuple4D SRC_FILES)
+aux_source_directory(./src/Heuclid/geometry/tools SRC_FILES)
 
-
+set(BUILD_TEST 1)
+if(BUILD_TEST)
+    add_executable(test src/Test/test.cpp ${SRC_FILES})
+else()
 # Build Heuclid static library
 add_library(${LIB_NAME} STATIC ${SRC_FILES})
-
+endif()
 
 # Set instal configuration
 message("Install path is ${CMAKE_INSTALL_PREFIX}")

@@ -22,14 +22,21 @@ private:
     double edgeDirectionY;
     double crossProduct;
 
-    HeuclidGeometryTools *heuclidGeometryTools;
+    HeuclidGeometryTools heuclidGeometryTools;
 
 public:
     const double EPSILON = 1.0e-7 ;
-    bool isPoint2DInsideConvexPolygon2D(const ConvexPolygon2D& convexPolygon2D, const Point2D<double>& pointToCheck);
 
-    int checkNumberOfVertices(const ConvexPolygon2D& convexPolygon2D);
-    int checkEdgeOfIndex(const ConvexPolygon2D& convexPolygon2D, const int& edgeIndex);
+    HeuclidGeometryPolygonTools():edgeStart(),edgeEnd(),dx(0.0),dy(0.0),edgeDirectionX(0.0),edgeDirectionY(0.0),crossProduct(0.0),heuclidGeometryTools(){};
+    bool isPoint2DInsideConvexPolygon2D(const ConvexPolygon2D& convexPolygon2D, const Point2D<double>& pointToCheck);
+    bool isPoint2DInsideConvexPolygon2D(double pointX, double pointY, std::vector<Point2D<double> > vertexBuffer,
+                                        int numOfVertices, bool clockwiseOrdered);
+
+
+    int checkNumberOfVertices(std::vector<Point2D<double> > Buffer, int _numOfVertices);
+    int checkEdgeOfIndex(int edgeIndex, int _numOfVertices);
+    // int checkNumberOfVertices(const ConvexPolygon2D& convexPolygon2D);
+    // int checkEdgeOfIndex(const ConvexPolygon2D& convexPolygon2D, const int& edgeIndex);
 
 
 

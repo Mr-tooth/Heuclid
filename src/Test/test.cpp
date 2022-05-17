@@ -7,6 +7,8 @@
 #include <Heuclid\geometry\ConvexPolygon2D.h>
 #include <Heuclid\geometry\tools\HeuclidPolygonTools.h>
 
+#include <matplotlibcpp.h>
+namespace plt = matplotlibcpp;
 int main()
 {
    
@@ -75,5 +77,56 @@ int main()
     // polygon check
     ljh::mathlib::HeuclidGeometryPolygonTools heuclidGeometryPolygonTools;
     
+    //ljh::mathlib::Point2D<double> pToCheck(1.2,3.5);
+    ljh::mathlib::Point2D<double> pToCheck(1.2,3);
+
+
+    ljh::mathlib::ConvexPolygon2D polygon(4);
+    ljh::mathlib::Point2D<double> p1(1,4);
+    ljh::mathlib::Point2D<double> p2(2,4);
+    ljh::mathlib::Point2D<double> p3(2,0);
+    ljh::mathlib::Point2D<double> p4(1,0);
+    std::vector<ljh::mathlib::Point2D<double> > buffer;
+    buffer.push_back(p1);
+    buffer.push_back(p2);
+    buffer.push_back(p3);
+    buffer.push_back(p4);
+
+    polygon.setVertexBuffer(buffer);
+    polygon.setClockwiseOrder(true);
+
+    bool isInPolygon = heuclidGeometryPolygonTools.isPoint2DInsideConvexPolygon2D(polygon,pToCheck);
+
+    std::cout<<"the Flag is ";
+    if(isInPolygon)
+        std::cout<<" true in "<<std::endl;
+    else
+        std::cout<<" false out "<<std::endl;
+
+
+    std::vector<double> vertX;
+    std::vector<double> vertY;
+    std::vector<double> pointsX;
+    std::vector<double> pointsY;
+    vertX.push_back(p1.getX());
+    vertX.push_back(p2.getX());
+    vertX.push_back(p3.getX());
+    vertX.push_back(p4.getX());
+    vertX.push_back(p1.getX());
+
+    vertY.push_back(p1.getY());
+    vertY.push_back(p2.getY());
+    vertY.push_back(p3.getY());
+    vertY.push_back(p4.getY());
+    vertY.push_back(p1.getY());
+
+    pointsX.push_back(pToCheck.getX());
+    pointsY.push_back(pToCheck.getY());
+
+    plt::figure(1);
+    plt::clf();
+    plt::plot(vertX,vertY,"r");
+    plt::scatter(pointsX,pointsY,4);
+    plt::show();
     return 0;
 }

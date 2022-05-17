@@ -13,5 +13,6 @@ set(BUILD_TEST_LJH 1)
 if(${BUILD_TEST_LJH})
     message("--[Test] Build Heuclid basic test!")
     add_executable(test test.cpp)
-    
+    find_package(matplotlib_cpp REQUIRED)
+    target_link_libraries(test ${matplotlib_LIBS})
 endif()

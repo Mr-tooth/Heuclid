@@ -2,12 +2,12 @@ cmake_minimum_required(VERSION 3.0)
 set(PROJECT_NAME Heuclid)
 project(${PROJECT_NAME} VERSION 0.1)
 
-set(CMAKE_BUILD_TYPE Release)
+
 
 message("Build type is ${CMAKE_BUILD_TYPE}")
 
 add_compile_options(-std=c++14)
-add_compile_options(/MT /O2)
+add_compile_options(/MT)
 
 set(ROOT_PATH ..)
 
@@ -26,11 +26,22 @@ aux_source_directory(./src/Heuclid/euclid/tuple2D SRC_FILES)
 aux_source_directory(./src/Heuclid/euclid/tuple3D SRC_FILES)
 aux_source_directory(./src/Heuclid/euclid/tuple4D SRC_FILES)
 aux_source_directory(./src/Heuclid/geometry/tools SRC_FILES)
+aux_source_directory(./src/Heuclid/geometry SRC_FILES)
 
-set(BUILD_TEST 1)
+set(BUILD_TEST 0)
+set(NEED_PLOT 1)
 if(BUILD_TEST)
+    set(CMAKE_BUILD_TYPE Debug)
+    
+    
     add_executable(test src/Test/test.cpp ${SRC_FILES})
+    if(NEED_PLOT)
+        find_package(matplotlib_cpp REQUIRED)
+        target_link_libraries(test ${matplotlib_LIBS})
+    endif()
 else()
+    set(CMAKE_BUILD_TYPE Release)
+    add_compile_options(/O2)
 # Build Heuclid static library
 add_library(${LIB_NAME} STATIC ${SRC_FILES})
 endif()

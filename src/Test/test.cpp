@@ -11,7 +11,9 @@
 namespace plt = matplotlibcpp;
 int main()
 {
-   
+   ljh::mathlib::Orientation2D oo;
+   oo.setYaw(3.5*pi_o);
+   std::cout<<"Yaw test is "<<oo.getYaw()<<std::endl;
     ljh::mathlib::Point2D<double> hhha;
     hhha.setX(100.0);
     ljh::mathlib::Point2D<double> testp(hhha);

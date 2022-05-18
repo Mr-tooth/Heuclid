@@ -24,6 +24,17 @@ bool Orientation2D::geometricallyEquals(const Orientation2D& other, const double
 
 double Orientation2D::shiftProperYaw(double _yaw)
 {
+    if(_yaw>2*pi_o)
+    {
+        int num = int(_yaw/(2*pi_o));
+        _yaw = _yaw - num*2*pi_o;
+    }
+    else if(_yaw<-2*pi_o)
+    {
+        int num = int(_yaw/(2*pi_o));
+        _yaw = _yaw + num*2*pi_o;
+    }
+        
     if(_yaw>pi_o && _yaw<=2*pi_o)
         _yaw -= 2*pi_o;
     else if(_yaw>=-2*pi_o && _yaw<-pi_o)

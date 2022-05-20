@@ -1,5 +1,5 @@
 
-#include <Heuclid\geometry\tools\HeuclidPolygonTools.h>
+#include <Heuclid/geometry/tools/HeuclidPolygonTools.h>
 
 _LJH_EUCLID_LIB_BEGIN
 

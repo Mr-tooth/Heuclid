@@ -1,7 +1,7 @@
 #pragma once
-#include <Heuclid\title\Title.h>
-#include <Heuclid\euclid\tuple2D\Point2D.h>
-#include <Heuclid\euclid\tuple2D\Vector2D.h>
+#include <Heuclid/title/Title.h>
+#include <Heuclid/euclid/tuple2D/Point2D.h>
+#include <Heuclid/euclid/tuple2D/Vector2D.h>
 
 _LJH_EUCLID_LIB_BEGIN
 class HeuclidGeometryTools

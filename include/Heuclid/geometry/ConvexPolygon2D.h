@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Heuclid\title\Title.h>
-#include <Heuclid\euclid\tuple2D\Point2D.h>
+#include <Heuclid/title/Title.h>
+#include <Heuclid/euclid/tuple2D/Point2D.h>
 #include <vector>
 _LJH_EUCLID_LIB_BEGIN
 class ConvexPolygon2D

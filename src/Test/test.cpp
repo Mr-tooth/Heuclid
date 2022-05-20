@@ -1,11 +1,11 @@
-#include <Heuclid\euclid\tuple2D\Point2D.h>
-#include <Heuclid\geometry\Pose2D.h>
-#include <Heuclid\geometry\Pose3D.h>
-#include <Heuclid\euclid\tools\QuaternionTool.h>
+#include <Heuclid/euclid/tuple2D/Point2D.h>
+#include <Heuclid/geometry/Pose2D.h>
+#include <Heuclid/geometry/Pose3D.h>
+#include <Heuclid/euclid/tools/QuaternionTool.h>
 #include <iostream>
 
-#include <Heuclid\geometry\ConvexPolygon2D.h>
-#include <Heuclid\geometry\tools\HeuclidPolygonTools.h>
+#include <Heuclid/geometry/ConvexPolygon2D.h>
+#include <Heuclid/geometry/tools/HeuclidPolygonTools.h>
 
 #include <matplotlibcpp.h>
 namespace plt = matplotlibcpp;

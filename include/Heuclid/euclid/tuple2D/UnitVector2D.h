@@ -3,7 +3,7 @@
 #define __UNIT__VECTOR__2D__
 
 #include <cmath>
-#include <Heuclid\euclid\interfaces\ZeroTestEpsilon.h>
+#include <Heuclid/euclid/interfaces/ZeroTestEpsilon.h>
 #define _LJH_EUCLID_LIB_BEGIN namespace ljh{namespace mathlib{
 #define _LJH_EUCLID_LIB_END }}
 

@@ -1,5 +1,5 @@
 
-#include <Heuclid\euclid\orientation\Orientation2D.h>
+#include <Heuclid/euclid/orientation/Orientation2D.h>
 
 _LJH_EUCLID_LIB_BEGIN
 

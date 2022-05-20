@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Heuclid\title\Title.h>
+#include <Heuclid/title/Title.h>
 #include <cmath>
 _LJH_EUCLID_LIB_BEGIN
 /**
@@ -78,7 +78,7 @@ template<typename dataType>
 Quaternion<dataType>::Quaternion(dataType _yaw, dataType _pitch, dataType _roll)
 {
     // from inner2outer
-    /** q = / sin(roll/2)\    /   0         \     /   0       \
+    /** q = / sin(roll/2)/    /   0         /     /   0       /
      *      |   0       |  *  | sin(pitch/2)|  * |   0        |   
      *      |   0       |     |   0         |    | sin(yaw/2) |
      *      | cos(roll/2)|    | cos(pitch/2)|    | cos(yaw/2) | 
@@ -165,10 +165,10 @@ void Quaternion<dataType>::negate()
 * Sets this quaternion to its conjugate.
 *
 * <pre>
-*      / -qx \
+*      / -qx /
 * q* = | -qy |
 *      | -qz |
-*      \  qs /
+*      /  qs /
 * </pre>
 */
 template<typename dataType>

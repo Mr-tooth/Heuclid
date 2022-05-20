@@ -1,8 +1,8 @@
 
 #pragma once
 
-#include <Heuclid\title\Title.h>
-#include <Heuclid\euclid\tuple4D\Quaternion.h>
+#include <Heuclid/title/Title.h>
+#include <Heuclid/euclid/tuple4D/Quaternion.h>
 _LJH_EUCLID_LIB_BEGIN
 
 

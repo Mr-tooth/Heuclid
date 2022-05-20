@@ -1,4 +1,4 @@
-#include <Heuclid\euclid\tools\HeuclidCoreTool.h>
+#include <Heuclid/euclid/tools/HeuclidCoreTool.h>
 
 _LJH_EUCLID_LIB_BEGIN
 double HeuclidCoreTool::normSquared(double x, double y)

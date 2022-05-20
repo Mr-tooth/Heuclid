@@ -1,6 +1,6 @@
-#include <Heuclid\title\Title.h>
-#include <Heuclid\geometry\ConvexPolygon2D.h>
-#include <Heuclid\geometry\tools\HeuclidGeometryTools.h>
+#include <Heuclid/title/Title.h>
+#include <Heuclid/geometry/ConvexPolygon2D.h>
+#include <Heuclid/geometry/tools/HeuclidGeometryTools.h>
 
 #define EDAGE_INDEX_OUT -1
 #define NUM_INEQUAL_VERTEX -2

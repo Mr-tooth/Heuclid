@@ -1,4 +1,4 @@
-#include <Heuclid\geometry\tools\HeuclidGeometryTools.h>
+#include <Heuclid/geometry/tools/HeuclidGeometryTools.h>
 
 _LJH_EUCLID_LIB_BEGIN
 

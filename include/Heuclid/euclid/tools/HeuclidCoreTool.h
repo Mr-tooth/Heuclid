@@ -1,6 +1,6 @@
 #pragma once
 #include <cmath>
-#include <Heuclid\title\Title.h>
+#include <Heuclid/title/Title.h>
 
 _LJH_EUCLID_LIB_BEGIN
 

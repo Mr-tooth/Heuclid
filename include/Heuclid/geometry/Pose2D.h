@@ -2,9 +2,9 @@
 #ifndef __Pose__2D__
 #define __Pose__2D__
 
-#include <Heuclid\euclid\tuple2D\Point2D.h>
-#include <Heuclid\euclid\orientation\Orientation2D.h>
-#include <Heuclid\euclid\interfaces\ZeroTestEpsilon.h>
+#include <Heuclid/euclid/tuple2D/Point2D.h>
+#include <Heuclid/euclid/orientation/Orientation2D.h>
+#include <Heuclid/euclid/interfaces/ZeroTestEpsilon.h>
 #define _LJH_EUCLID_LIB_BEGIN namespace ljh{namespace mathlib{
 #define _LJH_EUCLID_LIB_END }}
 

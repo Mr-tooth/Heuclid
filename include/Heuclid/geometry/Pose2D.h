@@ -31,7 +31,7 @@ public:
     void setY(const dataType& _y) {this->position.setY(_y);};
     void setYaw(const double& _yaw) {this->orientation.setYaw(_yaw);};
     void setPosition(const Point2D<dataType>& other) {this->position.setPoint2D(other);};
-    void setPosition(const dataType& _x, const dataType& _y) {this->position.setX(_x); this->position.setY(_y)};
+    void setPosition(const dataType& _x, const dataType& _y) {this->position.setX(_x); this->position.setY(_y);};
     void setOrientation(const Orientation2D& other) {this->orientation.setYaw(other.getYaw());};
     void setOrientation(const double& _yaw) {this->orientation.setYaw(_yaw);};
 

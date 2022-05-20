@@ -27,6 +27,14 @@ public:
     Point3D<dataType> getPosition() const{return this->position;};
     Quaternion<dataType> getOrientation() const{return this->orientation;};
 
+    void setX(const dataType& _x) {this->position.setX(_x);};
+    void setY(const dataType& _y) {this->position.setY(_y);};
+    void setZ(const dataType& _z) {this->position.setZ(_z);};
+
+    void setYawPitchRoll(const dataType& _yaw, const dataType& _pitch, const dataType& _roll) {this->orientation.setYawPitchRoll(_yaw,_pitch,_roll);};
+    //void setYaw(const double& _yaw) {this->orientation;};
+
+
     bool epsilonEquals(const Pose3D& other, const double epsilon);
     bool geometricallyEquals(const Pose3D& other, const double& epsilon);
     void operator=(const Pose3D& other);

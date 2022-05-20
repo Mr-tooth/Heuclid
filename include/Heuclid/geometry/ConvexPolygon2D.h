@@ -13,7 +13,7 @@ public:
     //virtual int calculateArea(){return 0;};
 
     void setClockwiseOrder(bool order){this->clockwiseOrdered = order;};
-    void setNumOfVertices(double num){this->numOfVertices = num;};
+    void setNumOfVertices(int num){this->numOfVertices = num;};
     void setVertexBuffer(std::vector<Point2D<double> > buffer);
     void setCentroid(Point2D<double> cen){this->centroid = cen;};
     void setArea(double _area){this->area =_area;};

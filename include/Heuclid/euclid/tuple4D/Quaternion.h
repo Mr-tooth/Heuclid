@@ -43,6 +43,8 @@ public:
     dataType getPitch() const;
     dataType getRoll() const;
 
+    void setYawPitchRoll(double _yaw, double _pitch, double _roll);
+
     inline void setUnsafe(dataType _x, dataType _y, dataType _z, dataType _s)
         {this->x = _x;this->y = _y;this->z = _z;this->s = _s;};
 
@@ -127,6 +129,25 @@ dataType Quaternion<dataType>::getRoll() const
 {
     return dataType(atan2(2.0*(this->z*this->y + this->x*this->s), 1.0-2.0*(this->y*this->y + this->x*this->x)));
 }
+
+template<typename dataType>
+void Quaternion<dataType>::setYawPitchRoll(double _yaw, double _pitch, double _roll)
+{
+    double cyaw = cos(double(_yaw/2));
+    double cpit = cos(double(_pitch/2));
+    double crol = cos(double(_roll/2));
+
+    double syaw = sin(double(_yaw/2));
+    double spit = sin(double(_pitch/2));
+    double srol = sin(double(_roll/2));
+
+    this->x = cyaw*cpit*srol - syaw*spit*crol;
+    this->y = cyaw*spit*crol + syaw*cpit*srol;
+    this->z = syaw*cpit*crol - cyaw*spit*srol;
+    this->s = cyaw*cpit*crol + syaw*spit*srol;
+}
+
+
 
 template<typename dataType>
 void Quaternion<dataType>::absolute()

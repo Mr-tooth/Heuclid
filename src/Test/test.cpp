@@ -66,12 +66,14 @@ int main()
     cnmb = cnmba;
     std::cout<<"cnmb pos is "<< cnmb.getPosition().getX()<<" "<< cnmb.getPosition().getY()<<" "<< cnmb.getPosition().getZ()<<" "<<std::endl;
     std::cout<<"cnmb ori is "<<cnmb.getOrientation().getX()<<" "<<cnmb.getOrientation().getY()<<" "<<cnmb.getOrientation().getZ()<<" "<<cnmb.getOrientation().getS()<<" "<<std::endl;
-
+    cnmba.setYawPitchRoll(0.4,0.5,0.3);
+    std::cout<<"cnmba ori now is "<<cnmba.getOrientation().getYaw()<<" "<<cnmba.getOrientation().getPitch()<<" "<<cnmba.getOrientation().getRoll()<<std::endl;
 
     ljh::mathlib::Quaternion<double> q5(0.245,0.3,0.5);
     std::cout<<"yaw is "<<q5.getYaw()<<std::endl;
     std::cout<<"pitch is "<<q5.getPitch()<<std::endl;
     std::cout<<"roll is "<<q5.getRoll()<<std::endl;
+
 
 
 

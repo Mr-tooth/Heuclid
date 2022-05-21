@@ -132,5 +132,48 @@ int main()
     plt::plot(vertX,vertY,"r");
     plt::scatter(pointsX,pointsY,4);
     plt::show();
+
+
+    ljh::mathlib::Point2D<double> pp1(0.8669,-0.1519);
+    ljh::mathlib::Point2D<double> pp2(0.9158,-0.3355);
+    ljh::mathlib::Point2D<double> pp3(0.6164,-0.4157);
+    ljh::mathlib::Point2D<double> pp4(0.5672,-0.2322);
+
+    ljh::mathlib::Point2D<double> sp1(0.9733,-0.2563);
+    ljh::mathlib::Point2D<double> sp2(1.0683,-0.4209);
+    ljh::mathlib::Point2D<double> sp3(0.7999,-0.5759);
+    ljh::mathlib::Point2D<double> sp4(0.7049,-0.41138);
+
+    vertX.clear();vertY.clear();
+    vertX.push_back(pp1.getX());
+    vertX.push_back(pp2.getX());
+    vertX.push_back(pp3.getX());
+    vertX.push_back(pp4.getX());
+    vertX.push_back(pp1.getX());
+
+    vertY.push_back(pp1.getY());
+    vertY.push_back(pp2.getY());
+    vertY.push_back(pp3.getY());
+    vertY.push_back(pp4.getY());
+    vertY.push_back(pp1.getY());
+
+    plt::figure(2);
+    plt::clf();
+    plt::plot(vertX,vertY,"r");
+
+    vertX.clear();vertY.clear();
+    vertX.push_back(sp1.getX());
+    vertX.push_back(sp2.getX());
+    vertX.push_back(sp3.getX());
+    vertX.push_back(sp4.getX());
+    vertX.push_back(sp1.getX());
+    vertY.push_back(sp1.getY());
+    vertY.push_back(sp2.getY());
+    vertY.push_back(sp3.getY());
+    vertY.push_back(sp4.getY());
+    vertY.push_back(sp1.getY());
+    plt::plot(vertX,vertY,"c");
+    plt::set_aspect_equal();
+    plt::show();
     return 0;
 }

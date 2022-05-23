@@ -19,7 +19,7 @@ public:
     void setArea(double _area){this->area =_area;};
 
     bool getClockwiseOrder() const{return this->clockwiseOrdered;};
-    double getNumOfVertices() const{return this->numOfVertices;};
+    int getNumOfVertices() const{return this->numOfVertices;};
     std::vector<Point2D<double> > getVertexBuffer() const{return this->vertexBuffer;};
     Point2D<double> getCentroid() const{return this->centroid;};
     double getArea() const{return this->area;};

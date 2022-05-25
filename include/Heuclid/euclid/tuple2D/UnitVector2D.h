@@ -26,7 +26,7 @@ public:
     UnitVector2D(dataType _x, dataType _y):x(_x),y(_y),dirty(true){};
     UnitVector2D(const UnitVector2D& other);
 
-    inline void absolute(){this->x = abs(this->x);this->y = abs(this->y);};
+    inline void absolute(){this->x = std::abs(this->x);this->y = std::abs(this->y);};
     inline void negate(){this->x = - this->x;this->y = - this->y;};
     void normalize();
     //bool operator==(const dataType& epsl) const {return (this->x == epsl && this->y == epsl);};
@@ -35,7 +35,7 @@ public:
     {return (this->x==other.x&&this->y=other.y);};
 
     bool equals(const dataType& epsl) const
-    {return (abs(this->x) <= epsl && abs(this->y) <= epsl);};
+    {return (std::abs(this->x) <= epsl && std::abs(this->y) <= epsl);};
 
     inline void markAsDirty() {this->dirty = true;};
     inline bool isDirty() const {return this->dirty;};

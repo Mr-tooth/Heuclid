@@ -48,7 +48,7 @@ private:
 template<typename dataType>
 bool Point2D<dataType>::epsilonEquals(const Point2D& other, const double& epsilon) const
 {
-    return (abs(this->getX()-other.getX())<=epsilon && abs(this->getY()-other.getY())<=epsilon);
+    return (std::abs(this->getX()-other.getX())<=epsilon && std::abs(this->getY()-other.getY())<=epsilon);
 }
 
 template<typename dataType>
@@ -63,7 +63,7 @@ bool Point2D<dataType>::geometricallyEquals(const Point2D& other, const double& 
 template<typename dataType>
 bool Point2D<dataType>::epsilonZero(const double& epsilon)
 {
-    return (abs(this->getX())<=epsilon && abs(this->getY())<=epsilon);
+    return (std::abs(this->getX())<=epsilon && std::abs(this->getY())<=epsilon);
 }
 
 

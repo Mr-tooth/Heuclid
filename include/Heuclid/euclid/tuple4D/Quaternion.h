@@ -152,7 +152,7 @@ void Quaternion<dataType>::setYawPitchRoll(double _yaw, double _pitch, double _r
 template<typename dataType>
 void Quaternion<dataType>::absolute()
 {
-    this->setUnsafe(abs(this->getX()),abs(this->getY()),abs(this->getZ()),abs(this->getS()));
+    this->setUnsafe(std::abs(this->getX()),std::abs(this->getY()),std::abs(this->getZ()),std::abs(this->getS()));
 }
 
 template<typename dataType>
@@ -201,10 +201,10 @@ void Quaternion<dataType>::normalize()
 template<typename dataType>
 bool Quaternion<dataType>::epsilonEquals(const Quaternion& other, const double& epsilon)
 {
-    return( abs(this->getX()-other.getX()) <=epsilon &&
-            abs(this->getY()-other.getY()) <=epsilon &&  
-            abs(this->getZ()-other.getZ()) <=epsilon &&
-            abs(this->getS()-other.getS()) <=epsilon );
+    return( std::abs(this->getX()-other.getX()) <=epsilon &&
+            std::abs(this->getY()-other.getY()) <=epsilon &&  
+            std::abs(this->getZ()-other.getZ()) <=epsilon &&
+            std::abs(this->getS()-other.getS()) <=epsilon );
 }
 
 template<typename dataType>
@@ -222,10 +222,10 @@ bool Quaternion<dataType>::geometricallyEquals(const Quaternion& other, const do
 template<typename dataType>
 bool Quaternion<dataType>::epsilonZero(const double& epsilon)
 {
-    return (abs(this->getX())<=epsilon &&
-            abs(this->getY())<=epsilon &&
-            abs(this->getZ())<=epsilon &&
-            abs(this->getS()-dataType(1))<=epsilon);
+    return (std::abs(this->getX())<=epsilon &&
+            std::abs(this->getY())<=epsilon &&
+            std::abs(this->getZ())<=epsilon &&
+            std::abs(this->getS()-dataType(1))<=epsilon);
 }
 
 template<typename dataType>

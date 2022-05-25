@@ -26,9 +26,9 @@ public:
     UnitVector3D(dataType _x, dataType _y, dataType _z):x(_x),y(_y),z(_z),dirty(true){};
     UnitVector3D(const UnitVector3D& other):x(other.x),y(other.y),z(other.z),dirty(other.dirty){};
 
-    inline void absolute(){this->x = abs(this->x);
-                           this->y = abs(this->y);
-                           this->z = abs(this->z);};
+    inline void absolute(){this->x = std::abs(this->x);
+                           this->y = std::abs(this->y);
+                           this->z = std::abs(this->z);};
 
     inline void negate(){this->x = - this->x;
                          this->y = - this->y;
@@ -42,7 +42,7 @@ public:
     {return (this->x==other.x && this->y=other.y && this->z=other.z);};
 
     bool equals(const dataType& epsl) const
-    {return (abs(this->x) <= epsl && abs(this->y) <= epsl && abs(this->z) <= epsl);};
+    {return (std::abs(this->x) <= epsl && std::abs(this->y) <= epsl && std::abs(this->z) <= epsl);};
 
     inline void markAsDirty() {this->dirty = true;};
     inline bool isDirty() const {return this->dirty;};

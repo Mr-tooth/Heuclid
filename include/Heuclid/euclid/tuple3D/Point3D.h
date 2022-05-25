@@ -49,9 +49,9 @@ private:
 template<typename dataType>
 bool Point3D<dataType>::epsilonEquals(const Point3D& other, const double& epsilon)
 {
-    return (abs(this->getX()-other.getX())<=epsilon &&
-            abs(this->getY()-other.getY())<=epsilon &&
-            abs(this->getZ()-other.getZ())<=epsilon);
+    return (std::abs(this->getX()-other.getX())<=epsilon &&
+            std::abs(this->getY()-other.getY())<=epsilon &&
+            std::abs(this->getZ()-other.getZ())<=epsilon);
 }
 
 template<typename dataType>
@@ -67,9 +67,9 @@ bool Point3D<dataType>::geometricallyEquals(const Point3D& other, const double& 
 template<typename dataType>
 bool Point3D<dataType>::epsilonZero(const double& epsilon)
 {
-    return (abs(this->getX())<=epsilon &&
-            abs(this->getY())<=epsilon &&
-            abs(this->getZ())<=epsilon);
+    return (std::abs(this->getX())<=epsilon &&
+            std::abs(this->getY())<=epsilon &&
+            std::abs(this->getZ())<=epsilon);
 }
 
 _LJH_EUCLID_LIB_END

@@ -41,8 +41,8 @@ bool HeuclidGeometryPolygonTools::isPoint2DInsideConvexPolygon2D(double pointX, 
     if(numOfVertices == 1)
     {
         this->edgeStart = vertexBuffer.at(0);
-        return (abs(pointX-this->edgeStart.getX()) < this->EPSILON &&
-                abs(pointY-this->edgeStart.getY()) < this->EPSILON );
+        return (std::abs(pointX-this->edgeStart.getX()) < this->EPSILON &&
+                std::abs(pointY-this->edgeStart.getY()) < this->EPSILON );
     }
     
     this->edgeStart = vertexBuffer.at(0);
@@ -50,11 +50,11 @@ bool HeuclidGeometryPolygonTools::isPoint2DInsideConvexPolygon2D(double pointX, 
     if(numOfVertices == 2)
     {
         // Quick check with the end-points
-        if(abs(pointX-this->edgeStart.getX()) < this->EPSILON &&
-            abs(pointY-this->edgeStart.getY()) < this->EPSILON )
+        if(std::abs(pointX-this->edgeStart.getX()) < this->EPSILON &&
+            std::abs(pointY-this->edgeStart.getY()) < this->EPSILON )
             return true;
-        if(abs(pointX-this->edgeEnd.getX()) < this->EPSILON &&
-            abs(pointY-this->edgeEnd.getY()) < this->EPSILON )
+        if(std::abs(pointX-this->edgeEnd.getX()) < this->EPSILON &&
+            std::abs(pointY-this->edgeEnd.getY()) < this->EPSILON )
             return true;
         
         // Check first that the point is inside the bounding box containing the edge.
@@ -87,7 +87,7 @@ bool HeuclidGeometryPolygonTools::isPoint2DInsideConvexPolygon2D(double pointX, 
         this->edgeDirectionY = this->edgeEnd.getY() - this->edgeStart.getY();
 
         this->crossProduct = edgeDirectionX*dy - dx*edgeDirectionY;                                      
-        return abs(this->crossProduct) < this->EPSILON;
+        return std::abs(this->crossProduct) < this->EPSILON;
     }
 
     if(heuclidGeometryTools.isPoint2DOnSideOfLine2D(pointX,pointY,this->edgeStart,this->edgeEnd,clockwiseOrdered))

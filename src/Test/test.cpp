@@ -6,7 +6,7 @@
 
 #include <Heuclid/geometry/ConvexPolygon2D.h>
 #include <Heuclid/geometry/tools/HeuclidPolygonTools.h>
-
+#include <Heuclid/geometry/Line2D.h>
 #include <matplotlibcpp.h>
 namespace plt = matplotlibcpp;
 int main()

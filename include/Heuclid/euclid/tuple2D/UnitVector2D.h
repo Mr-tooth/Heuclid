@@ -22,7 +22,8 @@ template<typename dataType>
 class UnitVector2D
 {
 public:
-    UnitVector2D():x(dataType(0)),y(dataType(0)),dirty(true){};
+    // SetZero means set the vector refer to X(1,0) axis 
+    UnitVector2D():x(dataType(1)),y(dataType(0)),dirty(true){};
     UnitVector2D(dataType _x, dataType _y):x(_x),y(_y),dirty(true){};
     UnitVector2D(const UnitVector2D& other);
 
@@ -45,6 +46,7 @@ public:
     dataType getRawX() const {return this->x;};
     dataType getRawY() const {return this->y;};
     
+    bool epsilonEquals(const UnitVector2D<dataType>& other, double epsilon);
 private:
     bool dirty;
     dataType x;
@@ -114,7 +116,11 @@ void UnitVector2D<dataType>::setY(dataType _y)
 //     return this->y;
 // }
 
-
+template<typename dataType>
+bool UnitVector2D<dataType>:: epsilonEquals(const UnitVector2D<dataType>& other, double epsilon)
+{
+    return (std::abs(this->getRawX()-other.getRawX())<epsilon && std::abs(this->getRawY()-other.getRawY())<epsilon);
+}
 
 _LJH_EUCLID_LIB_END
 

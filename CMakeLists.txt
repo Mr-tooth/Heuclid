@@ -28,7 +28,7 @@ aux_source_directory(./src/Heuclid/euclid/tuple4D SRC_FILES)
 aux_source_directory(./src/Heuclid/geometry/tools SRC_FILES)
 aux_source_directory(./src/Heuclid/geometry SRC_FILES)
 
-set(BUILD_TEST 0)
+set(BUILD_TEST 1)
 set(NEED_PLOT 1)
 if(BUILD_TEST)
     set(CMAKE_BUILD_TYPE Debug)

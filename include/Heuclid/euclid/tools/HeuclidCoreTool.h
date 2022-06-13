@@ -9,6 +9,10 @@ class HeuclidCoreTool
 public:
     double normSquared(double x, double y);
     double norm(double x, double y);
+    double abs(double x);
+    int abs(int x);
+    double cos(double x);
+    double sin(double x);
 };
 
 

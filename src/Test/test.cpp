@@ -7,20 +7,25 @@
 #include <Heuclid/geometry/ConvexPolygon2D.h>
 #include <Heuclid/geometry/tools/HeuclidPolygonTools.h>
 #include <Heuclid/geometry/Line2D.h>
+#include <Heuclid/euclid/tools/HeuclidInterpolationTool.h>
+#include <Heuclid/geometry/Line2D.h>
+
+#include <Heuclid/geometry/ConvexHull2D.h>
 #include <matplotlibcpp.h>
 namespace plt = matplotlibcpp;
 int main()
 {
-   ljh::mathlib::Orientation2D oo;
+    ljh::heuclid::ConvexHull2D<double> hull;
+   ljh::heuclid::Orientation2D oo;
    oo.setYaw(3.5*pi_o);
    std::cout<<"Yaw test is "<<oo.getYaw()<<std::endl;
-    ljh::mathlib::Point2D<double> hhha;
+    ljh::heuclid::Point2D<double> hhha;
     hhha.setX(100.0);
-    ljh::mathlib::Point2D<double> testp(hhha);
+    ljh::heuclid::Point2D<double> testp(hhha);
     std::cout<< "testp.x is "<<testp.getX()<<std::endl;
     bool equal = testp==hhha;
     std::cout<<"eual is "<<equal<<std::endl;
-    ljh::mathlib::Pose2D<double> midFootPose;
+    ljh::heuclid::Pose2D<double> midFootPose;
     // midFootPose.getPosition().setX(0.5);
     // midFootPose.getPosition().setY(0.7);
     midFootPose.setPosition(hhha);
@@ -29,7 +34,7 @@ int main()
     std::cout<<"Pose x is "<<midFootPose.getPosition().getX()<<std::endl;
     std::cout<<"Pose y is "<<midFootPose.getPosition().getY()<<std::endl;
     std::cout<<"Pose O is "<<midFootPose.getOrientation().getYaw()<<std::endl;
-    ljh::mathlib::Pose2D<double> mid(midFootPose);
+    ljh::heuclid::Pose2D<double> mid(midFootPose);
     bool equal2 = midFootPose==mid;
     std::cout<<"eual2 is "<<equal2<<std::endl;
     // std::vector<int> test(10,20);
@@ -44,15 +49,15 @@ int main()
     // test.push_back(200);
     // std::cout<<test[0]<<std::endl;
 
-    ljh::mathlib::Quaternion<double> q1(2.0,2.0,2.0,2.0);
-    ljh::mathlib::Quaternion<double> q4(3.0,4.0,4.0,2.0);
-    ljh::mathlib::Quaternion<double> q3;
-    ljh::mathlib::Quaternion<double> q2(1.0,2.0,0.3,0.54);
+    ljh::heuclid::Quaternion<double> q1(2.0,2.0,2.0,2.0);
+    ljh::heuclid::Quaternion<double> q4(3.0,4.0,4.0,2.0);
+    ljh::heuclid::Quaternion<double> q3;
+    ljh::heuclid::Quaternion<double> q2(1.0,2.0,0.3,0.54);
     std::cout<<" q1 is "<<q1.getX()<<" "<<q1.getY()<<" "<<q1.getZ()<<" "<<q1.getS()<<std::endl
              <<" q2 is "<<q2.getX()<<" "<<q2.getY()<<" "<<q2.getZ()<<" "<<q2.getS()<<std::endl
              <<" q3 is "<<q3.getX()<<" "<<q3.getY()<<" "<<q3.getZ()<<" "<<q3.getS()<<std::endl;
 
-    ljh::mathlib::multiply(q1,q2,q3);
+    ljh::heuclid::multiply(q1,q2,q3);
 
 
     std::cout<<" q1 is "<<q1.getX()<<" "<<q1.getY()<<" "<<q1.getZ()<<" "<<q1.getS()<<std::endl
@@ -60,8 +65,8 @@ int main()
              <<" q3 is "<<q3.getX()<<" "<<q3.getY()<<" "<<q3.getZ()<<" "<<q3.getS()<<std::endl;
     
     
-    ljh::mathlib::Pose3D<double> cnmb;
-    ljh::mathlib::Pose3D<double> cnmba(1,2,3,0.2,0.1,0.4);
+    ljh::heuclid::Pose3D<double> cnmb;
+    ljh::heuclid::Pose3D<double> cnmba(1,2,3,0.2,0.1,0.4);
 
     cnmb = cnmba;
     std::cout<<"cnmb pos is "<< cnmb.getPosition().getX()<<" "<< cnmb.getPosition().getY()<<" "<< cnmb.getPosition().getZ()<<" "<<std::endl;
@@ -69,7 +74,7 @@ int main()
     cnmba.setYawPitchRoll(0.4,0.5,0.3);
     std::cout<<"cnmba ori now is "<<cnmba.getOrientation().getYaw()<<" "<<cnmba.getOrientation().getPitch()<<" "<<cnmba.getOrientation().getRoll()<<std::endl;
 
-    ljh::mathlib::Quaternion<double> q5(0.245,0.3,0.5);
+    ljh::heuclid::Quaternion<double> q5(0.245,0.3,0.5);
     std::cout<<"yaw is "<<q5.getYaw()<<std::endl;
     std::cout<<"pitch is "<<q5.getPitch()<<std::endl;
     std::cout<<"roll is "<<q5.getRoll()<<std::endl;
@@ -79,18 +84,18 @@ int main()
 
 
     // polygon check
-    ljh::mathlib::HeuclidGeometryPolygonTools heuclidGeometryPolygonTools;
+    ljh::heuclid::HeuclidGeometryPolygonTools heuclidGeometryPolygonTools;
     
-    //ljh::mathlib::Point2D<double> pToCheck(1.2,3.5);
-    ljh::mathlib::Point2D<double> pToCheck(1.2,3);
+    //ljh::heuclid::Point2D<double> pToCheck(1.2,3.5);
+    ljh::heuclid::Point2D<double> pToCheck(1.2,3);
 
 
-    ljh::mathlib::ConvexPolygon2D polygon(4);
-    ljh::mathlib::Point2D<double> p1(1,4);
-    ljh::mathlib::Point2D<double> p2(2,4);
-    ljh::mathlib::Point2D<double> p3(2,0);
-    ljh::mathlib::Point2D<double> p4(1,0);
-    std::vector<ljh::mathlib::Point2D<double> > buffer;
+    ljh::heuclid::ConvexPolygon2D polygon(4);
+    ljh::heuclid::Point2D<double> p1(1,4);
+    ljh::heuclid::Point2D<double> p2(2,4);
+    ljh::heuclid::Point2D<double> p3(2,0);
+    ljh::heuclid::Point2D<double> p4(1,0);
+    std::vector<ljh::heuclid::Point2D<double> > buffer;
     buffer.push_back(p1);
     buffer.push_back(p2);
     buffer.push_back(p3);
@@ -134,15 +139,15 @@ int main()
     plt::show();
 
 
-    ljh::mathlib::Point2D<double> pp1(0.8669,-0.1519);
-    ljh::mathlib::Point2D<double> pp2(0.9158,-0.3355);
-    ljh::mathlib::Point2D<double> pp3(0.6164,-0.4157);
-    ljh::mathlib::Point2D<double> pp4(0.5672,-0.2322);
+    ljh::heuclid::Point2D<double> pp1(0.8669,-0.1519);
+    ljh::heuclid::Point2D<double> pp2(0.9158,-0.3355);
+    ljh::heuclid::Point2D<double> pp3(0.6164,-0.4157);
+    ljh::heuclid::Point2D<double> pp4(0.5672,-0.2322);
 
-    ljh::mathlib::Point2D<double> sp1(0.9733,-0.2563);
-    ljh::mathlib::Point2D<double> sp2(1.0683,-0.4209);
-    ljh::mathlib::Point2D<double> sp3(0.7999,-0.5759);
-    ljh::mathlib::Point2D<double> sp4(0.7049,-0.41138);
+    ljh::heuclid::Point2D<double> sp1(0.9733,-0.2563);
+    ljh::heuclid::Point2D<double> sp2(1.0683,-0.4209);
+    ljh::heuclid::Point2D<double> sp3(0.7999,-0.5759);
+    ljh::heuclid::Point2D<double> sp4(0.7049,-0.41138);
 
     vertX.clear();vertY.clear();
     vertX.push_back(pp1.getX());

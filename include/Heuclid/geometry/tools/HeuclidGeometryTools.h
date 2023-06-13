@@ -30,7 +30,7 @@ private:
     const double IS_POINT_ON_LINE_EPS = 1.0e-8;
     const double HALF_PI = 0.5 * PI;
     //ToUse CoreTool more conveniently
-    HeuclidCoreTool coreTool;
+    // HeuclidCoreTool coreTool;
 public:
     HeuclidGeometryTools():dx(0.0),dy(0.0),crossProduct(0.0),pointOnLineX(0.0),
                         pointOnLineY(0.0),lineDirectionX(0.0),lineDirectionY(0.0){};

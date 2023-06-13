@@ -197,16 +197,16 @@ bool HeuclidGeometryTools::areVector2DsParallel(double firstVectorX, double firs
     if(angleEpsilon<0.0 || angleEpsilon>this->HALF_PI)
         throw "The angleEpsilon input of function HeuclidGeometryTools::areVector2DsParallel is not right";
 
-    double firstVectorLength = isFirstVectorUnitary? 1.0: this->coreTool.norm(firstVectorX,firstVectorY);
+    double firstVectorLength = isFirstVectorUnitary? 1.0: HeuclidCoreTool::norm(firstVectorX,firstVectorY);
     if(firstVectorLength<this->ONE_TEN_MILLIONTH)
         return false;
-    double secondVectorLength = isSecondVectorUnitary? 1.0: this->coreTool.norm(secondVectorX,secondVectorY);
+    double secondVectorLength = isSecondVectorUnitary? 1.0: HeuclidCoreTool::norm(secondVectorX,secondVectorY);
     if(secondVectorLength<this->ONE_TEN_MILLIONTH)
         return false;
     
     double dot = firstVectorX * secondVectorX + firstVectorY * secondVectorY;
 
-    return this->coreTool.abs(dot/(firstVectorLength * secondVectorLength)) > this->coreTool.cos(angleEpsilon);
+    return HeuclidCoreTool::abs(dot/(firstVectorLength * secondVectorLength)) > HeuclidCoreTool::cos(angleEpsilon);
 }
 
 /**
@@ -300,11 +300,11 @@ double HeuclidGeometryTools::signedDistanceFromPoint2DToLine2D(double pointX, do
     
     double dx = pointX - pointOnLineX;
     double dy = pointY - pointOnLineY;
-    double directionMagnitude = isDirectionUnitary? 1.0:this->coreTool.norm(lineDirectionX,lineDirectionY);
+    double directionMagnitude = isDirectionUnitary? 1.0:HeuclidCoreTool::norm(lineDirectionX,lineDirectionY);
     
     // deteriorate to distance to two points
     if(directionMagnitude < this->ONE_TRILLIONTH)
-        return coreTool.norm(dx,dy);
+        return HeuclidCoreTool::norm(dx,dy);
     else
         return (lineDirectionX * dy - dx * lineDirectionY)/directionMagnitude ;
 
@@ -401,7 +401,7 @@ double HeuclidGeometryTools::distanceFromPoint2DToLine2D(double pointX, double p
                                             double lineDirectionX, double lineDirectionY,
                                             bool isDirectionUnitary)
 {
-    return this->coreTool.abs(this->signedDistanceFromPoint2DToLine2D(pointX,pointY,
+    return HeuclidCoreTool::abs(this->signedDistanceFromPoint2DToLine2D(pointX,pointY,
                                                                       pointOnLineX,pointOnLineY,  
                                                                       lineDirectionX,lineDirectionY,
                                                                       isDirectionUnitary));

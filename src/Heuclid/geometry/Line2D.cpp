@@ -77,13 +77,13 @@ Point2D<double> Line2D::getPoint()
  */
 bool Line2D::geometricallyEquals(const Line2D& other, double epsilon)
 {
-    HeuclidCoreTool tools;
+    
     // check if parallel
-    if (tools.abs(other.direction.getRawX()*this->direction.getRawY()-other.direction.getRawY()*this->direction.getRawX())>epsilon)
+    if (HeuclidCoreTool::abs(other.direction.getRawX()*this->direction.getRawY()-other.direction.getRawY()*this->direction.getRawX())>epsilon)
         return false;
 
     // check if collinear
-    else if(tools.abs((other.point.getX()-this->point.getX())*this->direction.getRawY()-
+    else if(HeuclidCoreTool::abs((other.point.getX()-this->point.getX())*this->direction.getRawY()-
                       (other.point.getY()-this->point.getY())*this->direction.getRawX())>epsilon)
         return false;
     else

@@ -34,6 +34,30 @@ public:
     // {return (this->getX()==other.getX()&&
     //          this->getY()==other.getY());};
 
+    // inline Point2D<dataType> operator=(const Point2D<dataType> & other)
+    // {
+    //     Point2D<dataType> point;
+    //     point.setX(other.getX() );
+    //     point.setY(other.getY() );
+    //     return point;
+    // }
+
+    inline Point2D<dataType> operator+(const Point2D<dataType> & other)
+    {
+        Point2D<dataType> point;
+        point.setX(this->getX() + other.getX() );
+        point.setY(this->getY() + other.getY() );
+        return point;
+    }
+
+    inline Point2D<dataType> operator-(const Point2D<dataType> & other)
+    {
+        Point2D<dataType> point;
+        point.setX(this->getX() - other.getX() );
+        point.setY(this->getY() - other.getY() );
+        return point;
+    }
+
     bool epsilonEquals(const Point2D& other, const double& epsilon) const;
     bool geometricallyEquals(const Point2D& other, const double& epsilon) const;
     bool epsilonZero(const double& epsilon);

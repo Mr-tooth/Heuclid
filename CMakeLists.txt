@@ -2,7 +2,9 @@ cmake_minimum_required(VERSION 3.0)
 set(PROJECT_NAME Heuclid)
 project(${PROJECT_NAME} VERSION 0.1)
 
-
+find_package(Eigen3 REQUIRED)
+include_directories(${EIGEN3_INCLUDE_DIR})
+message(STATUS "Eigen3 is in ${EIGEN3_INCLUDE_DIR}")
 
 message("Build type is ${CMAKE_BUILD_TYPE}")
 
@@ -28,7 +30,7 @@ aux_source_directory(./src/Heuclid/euclid/tuple4D SRC_FILES)
 aux_source_directory(./src/Heuclid/geometry/tools SRC_FILES)
 aux_source_directory(./src/Heuclid/geometry SRC_FILES)
 
-set(BUILD_TEST 1)
+set(BUILD_TEST 0)
 set(NEED_PLOT 1)
 if(BUILD_TEST)
     set(CMAKE_BUILD_TYPE Debug)
@@ -56,6 +58,10 @@ set(Heuclid_link_dirs ${CMAKE_INSTALL_PREFIX}/lib)
 configure_file(Heuclid.cmake.in ${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/HeuclidConfig.cmake @ONLY)
    
 install(FILES ${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/HeuclidConfig.cmake DESTINATION share/Heuclid/cmake)
-install(FILES ${PROJECT_BINARY_DIR}/Heuclid.lib DESTINATION lib)
+install(FILES ${PROJECT_BINARY_DIR}/Release/Heuclid.lib DESTINATION lib)
 install(DIRECTORY include/Heuclid DESTINATION include)
+
+
+# add test
+add_subdirectory(src/Test)
 

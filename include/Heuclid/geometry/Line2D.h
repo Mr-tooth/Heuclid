@@ -1,3 +1,4 @@
+#pragma once
 #include <Heuclid/title/Title.h>
 #include <Heuclid/euclid/tuple2D/Point2D.h>
 #include <Heuclid/euclid/tuple2D/UnitVector2D.h>

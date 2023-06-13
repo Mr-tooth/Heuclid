@@ -4,9 +4,8 @@
 
 _LJH_EUCLID_LIB_BEGIN
 
-class HeuclidCoreTool
+namespace HeuclidCoreTool
 {
-public:
     double normSquared(double x, double y);
     double norm(double x, double y);
     double abs(double x);

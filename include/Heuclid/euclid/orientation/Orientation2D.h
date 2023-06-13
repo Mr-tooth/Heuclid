@@ -4,7 +4,7 @@
 
 #include <cmath>
 #define pi_o 3.1415926535
-#define _LJH_EUCLID_LIB_BEGIN namespace ljh{namespace mathlib{
+#define _LJH_EUCLID_LIB_BEGIN namespace ljh{namespace heuclid{
 #define _LJH_EUCLID_LIB_END }}
 
 _LJH_EUCLID_LIB_BEGIN

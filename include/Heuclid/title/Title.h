@@ -1,7 +1,7 @@
 
 // Set the Proper LibName of the Namespace
 #ifndef _LJH_EUCLID_LIB_BEGIN
-#define _LJH_EUCLID_LIB_BEGIN namespace ljh{namespace mathlib{
+#define _LJH_EUCLID_LIB_BEGIN namespace ljh{namespace heuclid{
 #endif
 
 #ifndef _LJH_EUCLID_LIB_END

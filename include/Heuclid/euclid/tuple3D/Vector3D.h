@@ -2,7 +2,7 @@
 #ifndef __VECTOR__3D__
 #define __VECTOR__3D__
 
-#define _LJH_EUCLID_LIB_BEGIN namespace ljh{namespace mathlib{
+#define _LJH_EUCLID_LIB_BEGIN namespace ljh{namespace heuclid{
 #define _LJH_EUCLID_LIB_END }}
 
 _LJH_EUCLID_LIB_BEGIN

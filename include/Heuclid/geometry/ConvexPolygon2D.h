@@ -35,6 +35,7 @@ private:
 
 class Rectangle:public ConvexPolygon2D
 {
+public:
     Rectangle():ConvexPolygon2D(4) {};
 };
 

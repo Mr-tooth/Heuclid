@@ -73,6 +73,14 @@ private:
 };
 
 template<typename DataType, int MatrixRows>
+void ConvexHull2D<DataType, MatrixRows>::loadVertex(std::vector<Point2D<DataType>> _pointList)
+{
+    this->pointList.clear();
+    this->pointList = _pointList;
+    this->numOfPoints = static_cast<int>(this->pointList.size());
+}
+
+template<typename DataType, int MatrixRows>
 void ConvexHull2D<DataType, MatrixRows>::loadRectangleVertex(Rectangle rec1, Rectangle rec2)
 {
     // load vertex of two rectangles

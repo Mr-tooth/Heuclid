@@ -90,6 +90,7 @@ void ConvexHull2D<DataType, MatrixRows>::loadRectangleVertex(Rectangle rec1, Rec
        this->pointList.push_back(rec1.getVertexBuffer().at(i)); 
        this->pointList.push_back(rec2.getVertexBuffer().at(i)); 
     }
+    this->numOfPoints = static_cast<int>(this->pointList.size());
 }
 
 template<typename DataType, int MatrixRows>
@@ -135,17 +136,33 @@ void ConvexHull2D<DataType, MatrixRows>::computeConvexHullbyGraham_scan()
     std::vector<Point2D<DataType>> hull;
     hull.push_back(this->pointList[0]);
     hull.push_back(this->pointList[1]);
-    for (int i = 2; i < this->numOfPoints; ++i) 
+    for (int i = 2; i < this->numOfPoints+1; ++i) 
     {
         while (hull.size() >= 2) 
         {
+            int j = i % this->numOfPoints;
             int m = hull.size() - 1;
-            if (this->crossProduct(hull[m - 1], hull[m], this->pointList[i]) <= 0) 
+            double cross = this->crossProduct(hull[m - 1], hull[m], this->pointList[j]);
+            if(std::abs(cross) < eps)
+            {
+                double dist_m = (hull[m].getX()-hull[m - 1].getX())*(hull[m].getX()-hull[m - 1].getX()) + 
+                                (hull[m].getY()-hull[m - 1].getY())*(hull[m].getY()-hull[m - 1].getY());
+                double dist_i = (this->pointList[j].getX()-hull[m - 1].getX())*(this->pointList[j].getX()-hull[m - 1].getX()) + 
+                                (this->pointList[j].getY()-hull[m - 1].getY())*(this->pointList[j].getY()-hull[m - 1].getY());
+                if(dist_m < dist_i)
+                    hull.pop_back();
+            }
+            else if(cross < 0.0)
+            {
                 hull.pop_back();
+            }
+            // if (this->crossProduct(hull[m - 1], hull[m], this->pointList[i]) <= 0) 
+            //     hull.pop_back();
             else 
                 break;
         }
-        hull.push_back(this->pointList[i]);
+        if(i < this->numOfPoints)
+            hull.push_back(this->pointList[i]);
     }
 
     this->pointList = hull;
@@ -225,6 +242,7 @@ void ConvexHull2D<DataType, MatrixRows>::calculateHalfspaceForm(CONVEXHULL_METHO
         Ab_Matrix(i, 1) = this->pointList[i].getX() - this->pointList[j].getX();
         Ab_Matrix(i, 2) = -(this->pointList[j].getX() * this->pointList[i].getY() - this->pointList[i].getX() * this->pointList[j].getY());
     }
+
 }
 
 

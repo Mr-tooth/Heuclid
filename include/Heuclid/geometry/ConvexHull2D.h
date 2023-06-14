@@ -49,15 +49,19 @@ public:
     void calculateHalfspaceForm(CONVEXHULL_METHOD method);
     
     void loadRectangleVertex(Rectangle rec1, Rectangle rec2);
-    auto &getA_Matrix(){return this->A_Matrix;};
-    auto &getb_Matrix(){return this->b_Matrix;};
-    
+    void loadVertex(std::vector<Point2D<DataType>> _pointList);
+    auto &getA_Matrix() const{return this->A_Matrix;};
+    auto &getb_Matrix() const{return this->b_Matrix;};
+    auto &getAb_Matrix()const{return this->Ab_Matrix;};
+    auto &getNumofVertex()const{return this->numOfPoints;};
+    auto &getPointList() const{return this->pointList;};
 private:
     int numOfPoints;
     std::vector<Point2D<DataType>> pointList;
 
     Eigen::Matrix<DataType, MatrixRows, 2> A_Matrix;
     Eigen::Vector<DataType, MatrixRows> b_Matrix;
+    Eigen::Matrix<DataType, MatrixRows, 3> Ab_Matrix;
 
     DataType crossProduct(const Point2D<DataType> & p1, const Point2D<DataType> & p2, const Point2D<DataType> & p3);
     // bool comparePoints(const Point2D<DataType> & p1, const Point2D<DataType> & p2);
@@ -179,10 +183,10 @@ void ConvexHull2D<DataType, MatrixRows>::computeConvexHullbyGift_Wrapping()
         }
 
         p = q;
-    std::cout<<"doing wrapping...\n";
+    // std::cout<<"doing wrapping...\n";
     } while (p != leftmost);
 
-    std::cout<<"wrapping finished...\n";
+    // std::cout<<"wrapping finished...\n";
     this->pointList = hull;
     this->numOfPoints = this->pointList.size();
 
@@ -199,6 +203,8 @@ void ConvexHull2D<DataType, MatrixRows>::calculateHalfspaceForm(CONVEXHULL_METHO
     this->A_Matrix.setZero();
     this->b_Matrix.setZero();
     
+    this->Ab_Matrix.setZero();
+
     for(int i=0; i< this->numOfPoints; i++)
     {
         int j = (i + 1) % this->numOfPoints;
@@ -206,6 +212,10 @@ void ConvexHull2D<DataType, MatrixRows>::calculateHalfspaceForm(CONVEXHULL_METHO
         A_Matrix(i, 0) = this->pointList[j].getY() - this->pointList[i].getY();
         A_Matrix(i, 1) = this->pointList[i].getX() - this->pointList[j].getX();
         b_Matrix(i)    = -(this->pointList[j].getX() * this->pointList[i].getY() - this->pointList[i].getX() * this->pointList[j].getY());
+
+        Ab_Matrix(i, 0) = this->pointList[j].getY() - this->pointList[i].getY();
+        Ab_Matrix(i, 1) = this->pointList[i].getX() - this->pointList[j].getX();
+        Ab_Matrix(i, 2) = -(this->pointList[j].getX() * this->pointList[i].getY() - this->pointList[i].getX() * this->pointList[j].getY());
     }
 }
 

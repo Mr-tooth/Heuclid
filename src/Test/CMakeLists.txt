@@ -20,6 +20,7 @@ project(HeuclidTest)
 # 20230612 reconstruct heuclid test with googletest frame
 set(Heuclid_gtest_list
   TestConvexHull2D
+  TestBeizer
   )
 
 foreach(NAME IN LISTS Heuclid_gtest_list)

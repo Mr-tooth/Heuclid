@@ -49,7 +49,7 @@ public:
     void calculateHalfspaceForm(CONVEXHULL_METHOD method);
     
     void loadRectangleVertex(Rectangle rec1, Rectangle rec2);
-    void loadVertex(std::vector<Point2D<DataType>> _pointList);
+    void loadVertex(const std::vector<Point2D<DataType>>& _pointList);
     auto &getA_Matrix() const{return this->A_Matrix;};
     auto &getb_Matrix() const{return this->b_Matrix;};
     auto &getAb_Matrix()const{return this->Ab_Matrix;};
@@ -73,7 +73,7 @@ private:
 };
 
 template<typename DataType, int MatrixRows>
-void ConvexHull2D<DataType, MatrixRows>::loadVertex(std::vector<Point2D<DataType>> _pointList)
+void ConvexHull2D<DataType, MatrixRows>::loadVertex(const std::vector<Point2D<DataType>>& _pointList)
 {
     this->pointList.clear();
     this->pointList = _pointList;

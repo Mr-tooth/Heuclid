@@ -161,7 +161,11 @@ class Bezier : public Func<T>
   using controlPointsMatrix = Eigen::Matrix<double, Rows, Order+1>;
   
 public:
+  Bezier()
+  {
+    
 
+  };
   Bezier(controlPointsArray control_points, double duration, double t0 = 0.0)
   :control_points_(control_points),
    control_points_matrix(Eigen::Map<controlPointsMatrix>(control_points[0].data(), Rows, control_points.size())),
@@ -175,6 +179,15 @@ public:
     // }
     std::cout<<"control_matrix: \n"<<this->control_points_matrix<<std::endl;
     std::cout<<"end";
+  }
+
+  void setParams(controlPointsArray control_points, double duration, double t0 = 0.0)
+  {
+    this->control_points_ = control_points;
+    this->control_points_matrix = Eigen::Map<controlPointsMatrix>(control_points[0].data(), Rows, control_points.size());
+    this->t0_ = t0;
+    this->duration_ = duration;
+    this->compute_coeff();
   }
 
   /** \brief Evaluate function value.

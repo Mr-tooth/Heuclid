@@ -34,6 +34,13 @@ public:
     void setYawPitchRoll(const dataType& _yaw, const dataType& _pitch, const dataType& _roll) {this->orientation.setYawPitchRoll(_yaw,_pitch,_roll);};
     //void setYaw(const double& _yaw) {this->orientation;};
 
+    //reload << operator for output
+    friend std::ostream& operator<<(std::ostream& os, const Pose3D& pose)
+    {
+        os << "Pose3D: " <<"pos: "<< pose.position << "ori: " << pose.orientation;
+        return os;
+    }
+
 
     bool epsilonEquals(const Pose3D& other, const double epsilon);
     bool geometricallyEquals(const Pose3D& other, const double& epsilon);

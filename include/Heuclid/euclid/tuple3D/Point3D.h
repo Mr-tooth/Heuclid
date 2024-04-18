@@ -39,7 +39,142 @@ public:
     bool epsilonZero(const double& epsilon);
     inline void operator= (const Point3D& other) {this->x = other.x;this->y = other.y;this->z = other.z;};
     
+    // 重载运算符 + - * /
+    inline Point3D<dataType> operator+(const Point3D<dataType> & other) const
+    {
+        Point3D<dataType> point;
+        point.setX(this->getX() + other.getX());
+        point.setY(this->getY() + other.getY());
+        point.setZ(this->getZ() + other.getZ());
+        return point;
+    }
 
+    inline Point3D<dataType> operator-(const Point3D<dataType> & other) const
+    {
+        Point3D<dataType> point;
+        point.setX(this->getX() - other.getX());
+        point.setY(this->getY() - other.getY());
+        point.setZ(this->getZ() - other.getZ());
+        return point;
+    }
+
+    inline Point3D<dataType> operator*(const dataType& scale) const
+    {
+        Point3D<dataType> point;
+        point.setX(this->getX() * scale);
+        point.setY(this->getY() * scale);
+        point.setZ(this->getZ() * scale);
+        return point;
+    }
+
+    inline Point3D<dataType> operator/(const dataType& scale) const
+    {
+        Point3D<dataType> point;
+        point.setX(this->getX() / scale);
+        point.setY(this->getY() / scale);
+        point.setZ(this->getZ() / scale);
+        return point;
+    }
+
+    // 重载运算符 += -= *= /=
+    inline Point3D<dataType> operator+=(const Point3D<dataType> & other)
+    {
+        this->setX(this->getX() + other.getX());
+        this->setY(this->getY() + other.getY());
+        this->setZ(this->getZ() + other.getZ());
+        return *this;
+    }
+
+    inline Point3D<dataType> operator-=(const Point3D<dataType> & other)
+    {
+        this->setX(this->getX() - other.getX());
+        this->setY(this->getY() - other.getY());
+        this->setZ(this->getZ() - other.getZ());
+        return *this;
+    }
+
+    inline Point3D<dataType> operator*=(const dataType& scale)
+    {
+        this->setX(this->getX() * scale);
+        this->setY(this->getY() * scale);
+        this->setZ(this->getZ() * scale);
+        return *this;
+    }
+
+    inline Point3D<dataType> operator/=(const dataType& scale)
+    {
+        this->setX(this->getX() / scale);
+        this->setY(this->getY() / scale);
+        this->setZ(this->getZ() / scale);
+        return *this;
+    }
+
+    // 兼容Eigen库
+    inline Point3D<dataType> operator+(const Eigen::Matrix<dataType,3,1>& other) const
+    {
+        Point3D<dataType> point;
+        point.setX(this->getX() + other(0));
+        point.setY(this->getY() + other(1));
+        point.setZ(this->getZ() + other(2));
+        return point;
+    }
+
+    inline Point3D<dataType> operator*(const Eigen::Matrix<dataType,3,1>& scale) const
+    {
+        Point3D<dataType> point;
+        point.setX(this->getX() * scale(0));
+        point.setY(this->getY() * scale(1));
+        point.setZ(this->getZ() * scale(2));
+        return point;
+    }
+
+    inline Point3D<dataType> operator-(const Eigen::Matrix<dataType,3,1>& other) const
+    {
+        Point3D<dataType> point;
+        point.setX(this->getX() - other(0));
+        point.setY(this->getY() - other(1));
+        point.setZ(this->getZ() - other(2));
+        return point;
+    }
+
+    inline Point3D<dataType> operator+=(const Eigen::Matrix<dataType,3,1>& other)
+    {
+        this->setX(this->getX() + other(0));
+        this->setY(this->getY() + other(1));
+        this->setZ(this->getZ() + other(2));
+        return *this;
+    }
+
+    inline Point3D<dataType> operator-=(const Eigen::Matrix<dataType,3,1>& other)
+    {
+        this->setX(this->getX() - other(0));
+        this->setY(this->getY() - other(1));
+        this->setZ(this->getZ() - other(2));
+        return *this;
+    }
+
+    inline Point3D<dataType> operator*=(const Eigen::Matrix<dataType,3,1>& scale)
+    {
+        this->setX(this->getX() * scale(0));
+        this->setY(this->getY() * scale(1));
+        this->setZ(this->getZ() * scale(2));
+        return *this;
+    }
+
+    inline Point3D<dataType> operator/=(const Eigen::Matrix<dataType,3,1>& scale)
+    {
+        this->setX(this->getX() / scale(0));
+        this->setY(this->getY() / scale(1));
+        this->setZ(this->getZ() / scale(2));
+        return *this;
+    }
+
+    // 重载运算符 <<
+    friend std::ostream& operator<<(std::ostream& os, const Point3D& point)
+    {
+        os << "(" << point.getX() << "," << point.getY() << "," << point.getZ() << ")";
+        return os;
+    }
 private:
     dataType x;
     dataType y;

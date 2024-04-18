@@ -214,6 +214,19 @@ public:
         return ::std::sqrt(dx*dx+dy*dy);
     }
 
+    // get the norm of the point, return the data type of the point
+    dataType norm() const
+    {
+        return ::std::sqrt(this->getX()*this->getX()+this->getY()*this->getY());
+    }
+
+    // reload the << operator for cout
+    friend std::ostream& operator<<(std::ostream& os, const Point2D& point)
+    {
+        os << "(" << point.getX() << "," << point.getY() << ")";
+        return os;
+    }
+
 
     bool epsilonEquals(const Point2D& other, const double& epsilon) const;
     bool geometricallyEquals(const Point2D& other, const double& epsilon) const;

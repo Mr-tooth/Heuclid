@@ -65,7 +65,18 @@ public:
     friend void multiplyImpl(dType q1x, dType q1y, dType q1z, dType q1s, bool conjugateQ1,
                   dType q2x, dType q2y, dType q2z, dType q2s, bool conjugateQ2,
                   Quaternion<dType>& store);
+    
+    // 重载运算符 << 输出欧拉角roll pitch yaw
+    friend std::ostream& operator<<(std::ostream& os, const Quaternion& quaternion)
+    {
+        os << "Quaternion: " << quaternion.getX() << " " << quaternion.getY() << " " << quaternion.getZ() << " " << quaternion.getS();
+        os << " Euler: " << quaternion.getRoll() << " " << quaternion.getPitch() << " " << quaternion.getYaw();
+        return os;
+    }
 
+
+    
+    
 };
 
 template<typename dataType>

@@ -125,11 +125,101 @@ public:
         return point;
     }
 
+    inline Point2D<dataType> operator+=(const Point2D<dataType> & other)
+    {
+        this->setPoint2D(this->getX() + other.getX(), this->getY() + other.getY());
+        return *this;
+    }
+
+    // 兼容Eigen库
+    inline Point2D<dataType> operator+=(const Eigen::Matrix<dataType,2,1>& other)
+    {
+        this->setPoint2D(this->getX() + other(0), this->getY() + other(1));
+        return *this;
+    }
+
+    inline Point2D<dataType> operator-=(const Point2D<dataType> & other)
+    {
+        this->setPoint2D(this->getX() - other.getX(), this->getY() - other.getY());
+        return *this;
+    }
+
+    // 兼容Eigen库
+    inline Point2D<dataType> operator-=(const Eigen::Matrix<dataType,2,1>& other)
+    {
+        this->setPoint2D(this->getX() - other(0), this->getY() - other(1));
+        return *this;
+    }
+
+    inline Point2D<dataType> operator*=(const dataType& scale)
+    {
+        this->setPoint2D(this->getX() * scale, this->getY() * scale);
+        return *this;
+    }
+
+    // 兼容Eigen库
+    inline Point2D<dataType> operator*=(const Eigen::Matrix<dataType,2,1>& scale)
+    {
+        this->setPoint2D(this->getX() * scale(0), this->getY() * scale(1));
+        return *this;
+    }
+
+    inline Point2D<dataType> operator/=(const dataType& scale)
+    {
+        this->setPoint2D(this->getX() / scale, this->getY() / scale);
+        return *this;
+    }
+
+    // 兼容Eigen库
+    inline Point2D<dataType> operator/=(const Eigen::Matrix<dataType,2,1>& scale)
+    {
+        this->setPoint2D(this->getX() / scale(0), this->getY() / scale(1));
+        return *this;
+    }
+
+    inline Point2D<dataType> operator-() const
+    {
+        Point2D<dataType> point;
+        point.setX(-this->getX());
+        point.setY(-this->getY());
+        return point;
+    }
+
+    inline Point2D<dataType> operator+() const
+    {
+        Point2D<dataType> point;
+        point.setX(this->getX());
+        point.setY(this->getY());
+        return point;
+    }
+
+    inline Point2D<dataType> operator=(const Point2D<dataType> & other)
+    {
+        this->setPoint2D(other.getX(), other.getY());
+        return *this;
+    }
+
+    // 兼容Eigen库
+    inline Point2D<dataType> operator=(const Eigen::Matrix<dataType,2,1>& other)
+    {
+        this->setPoint2D(other(0), other(1));
+        return *this;
+    }
+
+    // get the distance between two points, return the data type of the point
+    dataType distance(const Point2D& other) const
+    {
+        double dx = this->getX()-other.getX();
+        double dy = this->getY()-other.getY();
+        return ::std::sqrt(dx*dx+dy*dy);
+    }
+
+
     bool epsilonEquals(const Point2D& other, const double& epsilon) const;
     bool geometricallyEquals(const Point2D& other, const double& epsilon) const;
     bool epsilonZero(const double& epsilon);
-    inline void operator= (const Point2D& other) {this->x =other.x;this->y = other.y;};
-    inline void operator= (const Eigen::Matrix<dataType,2,1>& other) {this->x =other(0);this->y = other(1);};
+    // inline void operator= (const Point2D& other) {this->x =other.x;this->y = other.y;};
+    // inline void operator= (const Eigen::Matrix<dataType,2,1>& other) {this->x =other(0);this->y = other(1);};
 
     //inline void operator==(const Point2D& other) {return (this->x==other.x&&this->y==other.y);};
 

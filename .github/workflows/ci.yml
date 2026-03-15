@@ -56,10 +56,11 @@ jobs:
 
       - name: Check docs generated
         run: |
-          if [ -d "build/doc/html" ]; then
+          if [ -d "build/doc/doxygen-html" ]; then
             echo "✅ Doxygen HTML docs generated"
-            ls build/doc/html/ | head -10
+            ls build/doc/doxygen-html/ | head -10
           else
-            echo "⚠️ No HTML output found, checking alternative locations..."
-            find build -name "*.html" -type f | head -5
+            echo "❌ No HTML output found"
+            find build/doc -type f 2>/dev/null | head -10
+            exit 1
           fi

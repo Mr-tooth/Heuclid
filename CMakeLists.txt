@@ -52,6 +52,8 @@ endif()
 
 # Doxygen settings (must be before base.cmake)
 set(DOXYGEN_USE_MATHJAX YES)
+set(DOXYGEN_FILE_PATTERNS "*.h")
+set(DOXYGEN_HTML_OUTPUT "doxygen-html")
 option(BUILD_DOCUMENTATION "Build Doxygen documentation" ON)
 option(INSTALL_DOCUMENTATION "Install Doxygen documentation" OFF)
 
@@ -151,32 +153,13 @@ install(
 # Install CMake package configuration
 install(
   TARGETS ${PROJECT_NAME}
-  EXPORT ${PROJECT_NAME}-targets
+  EXPORT ${PROJECT_NAME}Targets
 )
 
-install(
-  EXPORT ${PROJECT_NAME}-targets
-  NAMESPACE ${PROJECT_NAME}::
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-)
+# NOTE: Config.cmake, ConfigVersion.cmake, and export install are handled
+# by setup_project_finalize() via jrl-cmakemodules (package-config.cmake).
 
-include(CMakePackageConfigHelpers)
-
-configure_package_config_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Config.cmake.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-  INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-)
-
-write_basic_package_version_file(
-  "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
-  VERSION ${PROJECT_VERSION}
-  COMPATIBILITY AnyNewerVersion
-)
-
-install(
-  FILES
-    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-)
+# ---------------------------------------------------------------------------
+# --- Finalize (generates Doxyfile, pkg-config, coverage, etc.) -------------
+# ---------------------------------------------------------------------------
+setup_project_finalize()

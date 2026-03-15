@@ -1,0 +1,10 @@
+# Doxyfile.extra.in for Heuclid
+# Appended to jrl-cmakemodules generated Doxyfile
+# Uses Doxygen key = value syntax (not @VAR@ substitution)
+
+EXCLUDE_PATTERNS       = */title/*
+
+ENABLE_PREPROCESSING   = YES
+MACRO_EXPANSION        = YES
+EXPAND_ONLY_PREDEF     = NO
+PREDEFINED             = _LJH_EUCLID_LIB_BEGIN= _LJH_EUCLID_LIB_END=

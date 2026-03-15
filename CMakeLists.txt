@@ -72,29 +72,28 @@ check_minimal_cxx_standard(11 ENFORCE)
 # ---------------------------------------------------------------------------
 # --- Dependencies ----------------------------------------------------------
 # ---------------------------------------------------------------------------
-# Eigen3: only needed at build time (header-only), not exported
-# Consumers get Eigen3 via find_dependency in Config.cmake
-find_package(Eigen3 QUIET CONFIG)
+# Eigen3: header-only dependency. Use BUILD_INTERFACE so it's not exported.
+# Consumers find Eigen3 via find_dependency() in Config.cmake.
+find_package(Eigen3 QUIET)
 if(NOT TARGET Eigen3::Eigen)
-  message(STATUS "Eigen3 not found locally - fetching headers from GitHub")
+  message(STATUS "Eigen3 not found - fetching from GitHub (master branch)")
   include(FetchContent)
   FetchContent_Declare(
     Eigen3
     GIT_REPOSITORY "https://gitlab.com/libeigen/eigen.git"
-    GIT_TAG "3.4.0"
+    GIT_TAG "master"
     GIT_SHALLOW TRUE
   )
   FetchContent_GetProperties(Eigen3)
   if(NOT eigen3_POPULATED)
     FetchContent_Populate(Eigen3)
   endif()
-  add_library(heuclid_Eigen3 INTERFACE)
-  target_include_directories(heuclid_Eigen3 INTERFACE "${eigen3_SOURCE_DIR}")
-  set(_HEUCLID_EIGEN_TARGET heuclid_Eigen3)
-  message(STATUS "Eigen3 headers fetched from GitHub")
+  set(_HEUCLID_EIGEN_INCLUDE_DIR "${eigen3_SOURCE_DIR}")
+  message(STATUS "Eigen3 fetched: ${eigen3_SOURCE_DIR}")
 else()
-  set(_HEUCLID_EIGEN_TARGET Eigen3::Eigen)
-  message(STATUS "Eigen3 found: ${Eigen3_VERSION}")
+  # Extract include directory from system Eigen3 target
+  get_target_property(_HEUCLID_EIGEN_INCLUDE_DIR Eigen3::Eigen INTERFACE_INCLUDE_DIRECTORIES)
+  message(STATUS "Eigen3 found: ${_HEUCLID_EIGEN_INCLUDE_DIR}")
 endif()
 
 # ---------------------------------------------------------------------------
@@ -112,10 +111,9 @@ add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_include_directories(
   ${PROJECT_NAME}
   INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+            $<BUILD_INTERFACE:${_HEUCLID_EIGEN_INCLUDE_DIR}>
             $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
-
-target_link_libraries(${PROJECT_NAME} INTERFACE ${_HEUCLID_EIGEN_TARGET})
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_11)
 

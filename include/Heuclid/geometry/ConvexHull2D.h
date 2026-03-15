@@ -1,4 +1,9 @@
 
+/**
+ * @file ConvexHull2D.h
+ * @brief 2D convex hull computation (Graham scan, Gift wrapping).
+ * @author Junhang Lai (赖俊杭)
+ */
 #include <Heuclid/title/Title.h>
 #include <Heuclid/geometry/ConvexPolygon2D.h>
 #include <Heuclid/euclid/tools/HeuclidCoreTool.h>

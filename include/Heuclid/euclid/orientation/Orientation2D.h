@@ -1,4 +1,9 @@
 #pragma once
+/**
+ * @file Orientation2D.h
+ * @brief 2D orientation representation (yaw angle).
+ * @author Junhang Lai (赖俊杭)
+ */
 #ifndef __Orientation__2D__
 #define __Orientation__2D__
 

@@ -1,4 +1,9 @@
 #pragma once
+/**
+ * @file Line2D.h
+ * @brief 2D line representation (point-direction form).
+ * @author Junhang Lai (赖俊杭)
+ */
 #include <Heuclid/title/Title.h>
 #include <Heuclid/euclid/tuple2D/Point2D.h>
 #include <Heuclid/euclid/tuple2D/UnitVector2D.h>

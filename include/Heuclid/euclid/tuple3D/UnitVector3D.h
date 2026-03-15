@@ -1,4 +1,9 @@
 #pragma once
+/**
+ * @file UnitVector3D.h
+ * @brief 3D unit vector with automatic normalization.
+ * @author Junhang Lai (赖俊杭)
+ */
 #ifndef __UNIT__VECTOR__3D__
 #define __UNIT__VECTOR__3D__
 

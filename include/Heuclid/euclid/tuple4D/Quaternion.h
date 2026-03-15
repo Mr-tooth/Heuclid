@@ -1,4 +1,9 @@
 #pragma once
+/**
+ * @file Quaternion.h
+ * @brief Quaternion representation with Euler angle conversion.
+ * @author Junhang Lai (赖俊杭)
+ */
 
 #include <Heuclid/title/Title.h>
 #include <cmath>

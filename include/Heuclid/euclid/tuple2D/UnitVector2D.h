@@ -1,4 +1,9 @@
 #pragma once
+/**
+ * @file UnitVector2D.h
+ * @brief 2D unit vector with automatic normalization.
+ * @author Junhang Lai (赖俊杭)
+ */
 #ifndef __UNIT__VECTOR__2D__
 #define __UNIT__VECTOR__2D__
 

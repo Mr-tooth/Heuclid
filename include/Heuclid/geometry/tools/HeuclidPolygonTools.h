@@ -1,4 +1,9 @@
 #include <Heuclid/title/Title.h>
+/**
+ * @file HeuclidPolygonTools.h
+ * @brief Polygon utility functions.
+ * @author Junhang Lai (赖俊杭)
+ */
 #include <Heuclid/geometry/ConvexPolygon2D.h>
 #include <Heuclid/geometry/tools/HeuclidGeometryTools.h>
 

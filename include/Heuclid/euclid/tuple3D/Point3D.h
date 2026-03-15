@@ -1,4 +1,9 @@
 #pragma once
+/**
+ * @file Point3D.h
+ * @brief 3D point representation with arithmetic operations.
+ * @author Junhang Lai (赖俊杭)
+ */
 #ifndef __Point__3D__
 #define __Point__3D__
 

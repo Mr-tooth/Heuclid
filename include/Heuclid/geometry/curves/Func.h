@@ -1,4 +1,9 @@
 #pragma once
+/**
+ * @file Func.h
+ * @brief Template function and Bézier curve classes.
+ * @author Junhang Lai (赖俊杭)
+ */
 
 #include <array>
 #include <cmath>

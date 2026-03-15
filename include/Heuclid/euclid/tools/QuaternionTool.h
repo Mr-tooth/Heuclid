@@ -1,4 +1,9 @@
 
+/**
+ * @file QuaternionTool.h
+ * @brief Quaternion utility functions (Euler conversion, etc.).
+ * @author Junhang Lai (赖俊杭)
+ */
 #pragma once
 
 #include <Heuclid/title/Title.h>

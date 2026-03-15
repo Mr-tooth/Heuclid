@@ -1,4 +1,9 @@
 #pragma once
+/**
+ * @file Pose3D.h
+ * @brief 3D pose (position + quaternion orientation).
+ * @author Junhang Lai (赖俊杭)
+ */
 #ifndef __Pose__3D__
 #define __Pose__3D__
 

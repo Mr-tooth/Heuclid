@@ -1,62 +1,84 @@
+/**
+ * @file Point2D.h
+ * @brief 2D point representation with arithmetic operations and Eigen interop.
+ * @author Junhang Lai (赖俊杭)
+ */
+
 #pragma once
 #ifndef __Point__2D__
 #define __Point__2D__
 
 #include <cmath>
 #include <Eigen/Dense>
+
 #define _LJH_EUCLID_LIB_BEGIN namespace ljh{namespace heuclid{
 #define _LJH_EUCLID_LIB_END }}
 
 _LJH_EUCLID_LIB_BEGIN
-/*
-* A 2D point represents the 2D coordinates of a location on the XY-plane.
-* */
+
+/**
+ * @brief A 2D point representing coordinates on the XY-plane.
+ *
+ * @tparam dataType The scalar type (e.g., double, float).
+ *
+ * Provides basic 2D point operations including arithmetic (+, -, *, /),
+ * distance computation, norm, and full Eigen::Matrix interoperability.
+ *
+ * @code
+ * Point2D<double> p1(1.0, 2.0);
+ * Point2D<double> p2(3.0, 4.0);
+ * double dist = p1.distance(p2);
+ * Eigen::Vector2d ev = Eigen::Vector2d(5.0, 6.0);
+ * Point2D<double> p3 = p1 + ev;  // Eigen interop
+ * @endcode
+ */
 template<typename dataType>
 class Point2D
 {
 
 public:
+    /** @brief Default constructor. Initializes to origin (0, 0). */
     Point2D():x(dataType(0)),y(dataType(0)){};
+
+    /** @brief Construct from x and y coordinates. */
     Point2D(dataType _x,dataType _y):x(_x),y(_y){};
+
+    /** @brief Copy constructor. */
     Point2D(const Point2D& other):x(other.x),y(other.y){};
+
+    /** @brief Construct from an Eigen 2D vector. */
     Point2D(const Eigen::Matrix<dataType,2,1>& other):x(other(0)),y(other(1)){};
 
+    /** @name Getters */
+    ///@{
     inline dataType getX() const {return this->x;};
     inline dataType getY() const {return this->y;};
+    ///@}
+
+    /** @name Setters */
+    ///@{
     inline void setX(const dataType& _x) {this->x = _x;};
     inline void setY(const dataType& _y) {this->y = _y;};
     inline void setPoint2D(const dataType& _x,const dataType& _y) {this->x = _x;this->y = _y;};
     inline void setPoint2D(const Point2D& other) {this->x =other.x;this->y = other.y;};
     inline void setPoint2D(const Eigen::Matrix<dataType,2,1>& other) {this->x =other(0);this->y = other(1);};
+    ///@}
 
-    //inline bool operator==(dataType _null) {return (this->x==_null&&this->y==_null);};
-    
+    /** @name Comparison operators */
+    ///@{
     inline bool operator==(const Point2D& other) const
     {
         return (this->x == other.x && this->y == other.y);
     };
-
-    // 兼容Eigen库
+    /** @brief Eigen interoperability comparison. */
     inline bool operator==(const Eigen::Matrix<dataType,2,1>& other) const
     {
         return (this->x == other(0) && this->y == other(1));
     };
+    ///@}
 
-    // {return (this->getX()==other.getX()&&
-    //          this->getY()==other.getY());};
-
-    // inline Point2D<dataType> operator=(const Point2D<dataType> & other)
-    // {
-    //     Point2D<dataType> point;
-    //     point.setX(other.getX() );
-    //     point.setY(other.getY() );
-    //     return point;
-    // }
-
-    // 重载运算符 + - * /
-    
-    
-
+    /** @name Arithmetic operators */
+    ///@{
     inline Point2D<dataType> operator+(const Point2D<dataType> & other) const
     {
         Point2D<dataType> point;
@@ -65,7 +87,7 @@ public:
         return point;
     }
 
-    // 兼容Eigen库
+    /** @brief Eigen interoperability addition. */
     inline Point2D<dataType> operator+(const Eigen::Matrix<dataType,2,1>& other) const
     {
         Point2D<dataType> point;
@@ -82,7 +104,7 @@ public:
         return point;
     }
 
-    // 兼容Eigen库
+    /** @brief Element-wise multiplication with Eigen vector. */
     inline Point2D<dataType> operator*(const Eigen::Matrix<dataType,2,1>& scale) const
     {
         Point2D<dataType> point;
@@ -99,7 +121,7 @@ public:
         return point;
     }
 
-    // 兼容Eigen库
+    /** @brief Eigen interoperability subtraction. */
     inline Point2D<dataType> operator-(const Eigen::Matrix<dataType,2,1>& other) const
     {
         Point2D<dataType> point;
@@ -116,7 +138,7 @@ public:
         return point;
     }
 
-    // 兼容Eigen库
+    /** @brief Element-wise division with Eigen vector. */
     inline Point2D<dataType> operator/(const Eigen::Matrix<dataType,2,1>& scale) const
     {
         Point2D<dataType> point;
@@ -131,7 +153,6 @@ public:
         return *this;
     }
 
-    // 兼容Eigen库
     inline Point2D<dataType> operator+=(const Eigen::Matrix<dataType,2,1>& other)
     {
         this->setPoint2D(this->getX() + other(0), this->getY() + other(1));
@@ -144,7 +165,6 @@ public:
         return *this;
     }
 
-    // 兼容Eigen库
     inline Point2D<dataType> operator-=(const Eigen::Matrix<dataType,2,1>& other)
     {
         this->setPoint2D(this->getX() - other(0), this->getY() - other(1));
@@ -157,7 +177,6 @@ public:
         return *this;
     }
 
-    // 兼容Eigen库
     inline Point2D<dataType> operator*=(const Eigen::Matrix<dataType,2,1>& scale)
     {
         this->setPoint2D(this->getX() * scale(0), this->getY() * scale(1));
@@ -170,7 +189,6 @@ public:
         return *this;
     }
 
-    // 兼容Eigen库
     inline Point2D<dataType> operator/=(const Eigen::Matrix<dataType,2,1>& scale)
     {
         this->setPoint2D(this->getX() / scale(0), this->getY() / scale(1));
@@ -199,14 +217,18 @@ public:
         return *this;
     }
 
-    // 兼容Eigen库
     inline Point2D<dataType> operator=(const Eigen::Matrix<dataType,2,1>& other)
     {
         this->setPoint2D(other(0), other(1));
         return *this;
     }
+    ///@}
 
-    // get the distance between two points, return the data type of the point
+    /**
+     * @brief Compute Euclidean distance to another point.
+     * @param other The target point.
+     * @return The distance as dataType.
+     */
     dataType distance(const Point2D& other) const
     {
         double dx = this->getX()-other.getX();
@@ -214,31 +236,48 @@ public:
         return ::std::sqrt(dx*dx+dy*dy);
     }
 
-    // get the norm of the point, return the data type of the point
+    /**
+     * @brief Compute the Euclidean norm (distance to origin).
+     * @return The norm as dataType.
+     */
     dataType norm() const
     {
         return ::std::sqrt(this->getX()*this->getX()+this->getY()*this->getY());
     }
 
-    // reload the << operator for cout
+    /** @brief Stream output operator. */
     friend std::ostream& operator<<(std::ostream& os, const Point2D& point)
     {
         os << "(" << point.getX() << "," << point.getY() << ")";
         return os;
     }
 
-
+    /**
+     * @brief Check if two points are equal within an epsilon tolerance.
+     * @param other The point to compare.
+     * @param epsilon The tolerance threshold.
+     * @return True if |dx| <= epsilon and |dy| <= epsilon.
+     */
     bool epsilonEquals(const Point2D& other, const double& epsilon) const;
-    bool geometricallyEquals(const Point2D& other, const double& epsilon) const;
-    bool epsilonZero(const double& epsilon);
-    // inline void operator= (const Point2D& other) {this->x =other.x;this->y = other.y;};
-    // inline void operator= (const Eigen::Matrix<dataType,2,1>& other) {this->x =other(0);this->y = other(1);};
 
-    //inline void operator==(const Point2D& other) {return (this->x==other.x&&this->y==other.y);};
+    /**
+     * @brief Check if two points are geometrically equal (Euclidean distance).
+     * @param other The point to compare.
+     * @param epsilon The distance threshold.
+     * @return True if distance <= epsilon.
+     */
+    bool geometricallyEquals(const Point2D& other, const double& epsilon) const;
+
+    /**
+     * @brief Check if point is at origin within epsilon.
+     * @param epsilon The tolerance threshold.
+     * @return True if both coordinates are within epsilon of zero.
+     */
+    bool epsilonZero(const double& epsilon);
 
 private:
-    dataType x;
-    dataType y;
+    dataType x; ///< X coordinate
+    dataType y; ///< Y coordinate
 };
 
 template<typename dataType>
@@ -261,11 +300,6 @@ bool Point2D<dataType>::epsilonZero(const double& epsilon)
 {
     return (std::abs(this->getX())<=epsilon && std::abs(this->getY())<=epsilon);
 }
-
-
-
-
-
 
 _LJH_EUCLID_LIB_END
 

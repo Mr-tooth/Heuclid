@@ -1,4 +1,9 @@
 #pragma once
+/**
+ * @file Vector2D.h
+ * @brief 2D vector with arithmetic operations.
+ * @author Junhang Lai (赖俊杭)
+ */
 #ifndef __VECTOR__2D__
 #define __VECTOR__2D__
 

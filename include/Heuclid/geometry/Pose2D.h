@@ -1,4 +1,9 @@
 #pragma once
+/**
+ * @file Pose2D.h
+ * @brief 2D pose (position + orientation).
+ * @author Junhang Lai (赖俊杭)
+ */
 #ifndef __Pose__2D__
 #define __Pose__2D__
 

@@ -1,4 +1,9 @@
 #pragma once
+/**
+ * @file HeuclidCoreTool.h
+ * @brief Core utility functions for geometric computation.
+ * @author Junhang Lai (赖俊杭)
+ */
 #include <cmath>
 #include <Heuclid/title/Title.h>
 

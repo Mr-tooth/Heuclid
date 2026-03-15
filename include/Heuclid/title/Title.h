@@ -1,4 +1,9 @@
 
+/**
+ * @file Title.h
+ * @brief Namespace definition macros for Heuclid library.
+ * @author Junhang Lai (赖俊杭)
+ */
 // Set the Proper LibName of the Namespace
 #ifndef _LJH_EUCLID_LIB_BEGIN
 #define _LJH_EUCLID_LIB_BEGIN namespace ljh{namespace heuclid{

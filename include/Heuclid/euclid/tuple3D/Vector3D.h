@@ -1,4 +1,9 @@
 #pragma once
+/**
+ * @file Vector3D.h
+ * @brief 3D vector with arithmetic operations.
+ * @author Junhang Lai (赖俊杭)
+ */
 #ifndef __VECTOR__3D__
 #define __VECTOR__3D__
 

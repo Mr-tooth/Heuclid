@@ -14,20 +14,12 @@ on:
 
 jobs:
   build:
-    name: ${{ matrix.os }} / ${{ matrix.compiler }}
+    name: ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - os: ubuntu-latest
-            compiler: gcc
-          - os: ubuntu-latest
-            compiler: clang
-          - os: macos-latest
-            compiler: clang
-          - os: windows-latest
-            compiler: msvc
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
       - name: Checkout
@@ -39,9 +31,7 @@ jobs:
         run: cmake -B build -DBUILD_TESTING=ON
 
       - name: Build
-        run: cmake --build build --config Release -j ${{ env.NUM_JOBS || '4' }}
-        env:
-          NUM_JOBS: ${{ runner.os == 'Linux' && '$(nproc)' || runner.os == 'macOS' && '$(sysctl -n hw.ncpu)' || '4' }}
+        run: cmake --build build --config Release -j 4
 
       - name: Test
         run: ctest --test-dir build --output-on-failure -C Release

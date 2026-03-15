@@ -72,27 +72,27 @@ check_minimal_cxx_standard(11 ENFORCE)
 # ---------------------------------------------------------------------------
 # --- Dependencies ----------------------------------------------------------
 # ---------------------------------------------------------------------------
-# Eigen3: try find_package first, then FetchContent as fallback
+# Eigen3: try find_package first, then FetchContent as fallback (headers only)
 find_package(Eigen3 QUIET CONFIG)
 if(NOT Eigen3_FOUND)
-  message(STATUS "Eigen3 not found locally - fetching from GitHub")
+  message(STATUS "Eigen3 not found locally - fetching headers from GitHub")
   include(FetchContent)
+  # Eigen is header-only: we only need the headers, not its CMake targets
+  # (which would conflict with jrl-cmakemodules' "uninstall" target)
   FetchContent_Declare(
     Eigen3
     GIT_REPOSITORY "https://gitlab.com/libeigen/eigen.git"
     GIT_TAG "3.4.0"
     GIT_SHALLOW TRUE
   )
-  # Eigen is header-only, no build needed
-  set(EIGEN_BUILD_DOC OFF CACHE BOOL "" FORCE)
-  set(EIGEN_BUILD_TESTING OFF CACHE BOOL "" FORCE)
-  set(EIGEN_BUILD_PKGCONFIG OFF CACHE BOOL "" FORCE)
-  FetchContent_MakeAvailable(Eigen3)
-  # Create alias target for compatibility
-  if(NOT TARGET Eigen3::Eigen)
-    add_library(Eigen3::Eigen ALIAS eigen)
+  FetchContent_GetProperties(Eigen3)
+  if(NOT eigen3_POPULATED)
+    FetchContent_Populate(Eigen3)
+    add_library(Eigen3_Eigen INTERFACE)
+    target_include_directories(Eigen3_Eigen INTERFACE "${eigen3_SOURCE_DIR}")
+    add_library(Eigen3::Eigen ALIAS Eigen3_Eigen)
   endif()
-  message(STATUS "Eigen3 fetched from GitHub")
+  message(STATUS "Eigen3 headers fetched from GitHub")
 else()
   message(STATUS "Eigen3 found: ${Eigen3_VERSION}")
 endif()

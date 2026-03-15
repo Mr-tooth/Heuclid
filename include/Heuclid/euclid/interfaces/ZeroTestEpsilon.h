@@ -6,5 +6,6 @@
  */
 
 #ifndef ZERO_TEST_EPSILON
+/** @brief Default epsilon for floating point zero comparison. */
 #define ZERO_TEST_EPSILON 1e-6
 #endif

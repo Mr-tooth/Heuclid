@@ -9,6 +9,7 @@
 #include <Heuclid/euclid/tuple2D/Point2D.h>
 #include <vector>
 _LJH_EUCLID_LIB_BEGIN
+/** @brief A 2D convex polygon defined by its vertex buffer. */
 class ConvexPolygon2D
 {
 public:

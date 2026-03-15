@@ -13,6 +13,7 @@
 #define _LJH_EUCLID_LIB_END }}
 
 _LJH_EUCLID_LIB_BEGIN
+/** @brief 2D orientation represented as a yaw angle with trigonometric caching. */
 class Orientation2D
 {
 public:

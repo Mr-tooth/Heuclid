@@ -14,6 +14,7 @@
 
 _LJH_EUCLID_LIB_BEGIN
 
+/** @brief A 2D line in point-direction form (origin + direction vector). */
 class Line2D
 {
 private:

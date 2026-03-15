@@ -13,35 +13,70 @@
 
 _LJH_EUCLID_LIB_BEGIN
 /**
- * A 3D point represents the 3D coordinates of a location in space.
- * <p>
- * */
+ * @brief A 3D point representing coordinates in 3D space.
+ *
+ * @tparam dataType The scalar type (e.g., double, float).
+ *
+ * Provides 3D point operations including arithmetic (+, -, *, /),
+ * distance computation, and Eigen::Matrix interoperability.
+ */
 template<typename dataType>
 class Point3D
 {
 
 public:
+    /** @brief Default constructor. Initializes to origin (0, 0, 0). */
     Point3D():x(dataType(0)),y(dataType(0)),z(dataType(0)){};
+    /** @brief Construct from x, y, z coordinates. */
     Point3D(dataType _x, dataType _y, dataType _z):x(_x),y(_y),z(_z){};
+    /** @brief Copy constructor. */
     Point3D(const Point3D& other):x(other.x),y(other.y),z(other.z){};
 
+    /** @name Getters */
+    ///@{
     inline dataType getX() const {return this->x;};
     inline dataType getY() const {return this->y;};
     inline dataType getZ() const {return this->z;};
+    ///@}
+
+    /** @name Setters */
+    ///@{
     inline void setX(dataType _x) {this->x = _x;};
     inline void setY(dataType _y) {this->y = _y;};
     inline void setZ(dataType _z) {this->z = _z;};
     inline void setPoint3D(const dataType& _x,const dataType& _y,const dataType& _z) {this->x = _x;this->y = _y;this->z = _z;};
     inline void setPoint3D(const Point3D& other) {this->x =other.x;this->y = other.y;this->z = other.z;};
+    ///@}
 
+    /** @name Comparison operators */
+    ///@{
     inline bool operator==(const Point3D& other) const 
     {return (this->getX()==other.getX()&&
              this->getY()==other.getY()&&
              this->getZ()==other.getZ());};
+    ///@}
 
+    /**
+     * @brief Check equality within epsilon tolerance (component-wise).
+     * @param other The point to compare.
+     * @param epsilon The tolerance threshold.
+     */
     bool epsilonEquals(const Point3D& other, const double& epsilon);
+
+    /**
+     * @brief Check geometric equality (Euclidean distance).
+     * @param other The point to compare.
+     * @param epsilon The distance threshold.
+     */
     bool geometricallyEquals(const Point3D& other, const double& epsilon);
+
+    /**
+     * @brief Check if point is at origin within epsilon.
+     * @param epsilon The tolerance threshold.
+     */
     bool epsilonZero(const double& epsilon);
+
+    /** @brief Assignment operator. */
     inline void operator= (const Point3D& other) {this->x = other.x;this->y = other.y;this->z = other.z;};
     
     // 重载运算符 + - * /

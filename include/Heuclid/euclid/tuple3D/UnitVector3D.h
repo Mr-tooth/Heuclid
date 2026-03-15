@@ -1,4 +1,9 @@
 #pragma once
+/**
+ * @file UnitVector3D.h
+ * @brief 3D unit vector with automatic normalization.
+ * @author Junhang Lai (赖俊杭)
+ */
 #ifndef __UNIT__VECTOR__3D__
 #define __UNIT__VECTOR__3D__
 
@@ -8,16 +13,15 @@
 #define _LJH_EUCLID_LIB_END }}
 
 _LJH_EUCLID_LIB_BEGIN
+
 /**
- * Implementation for a 3 dimensional unit-length vector.
- * 
- * This unit vector shares the same API as a regular vector 3D while ensuring it is normalized when
- * accessing directly or indirectly its individual components, i.e. when invoking either
- * {@link #getX()}, {@link #getY()}, or {@link #getZ()}.
+ * @brief A 3D unit-length vector with lazy normalization.
  *
- * When the values of this vector are set to zero, the next time it is normalized it will be reset
- * to (1.0, 0.0, 0.0).
- * */
+ * @tparam dataType The scalar type (e.g., double, float).
+ *
+ * Same as UnitVector2D but in 3D. When set to zero, the next normalization
+ * resets to (1, 0, 0).
+ */
 template<typename dataType>
 class UnitVector3D
 {

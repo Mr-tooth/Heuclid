@@ -1,0 +1,66 @@
+#
+# Copyright (c) 2026 Junhang Lai (赖俊杭)
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+name: CI
+
+on:
+  push:
+    branches: [master, feature/*]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    name: Build / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Configure
+        run: cmake -B build -DBUILD_TESTING=ON -DBUILD_DOCUMENTATION=OFF
+
+      - name: Build
+        run: cmake --build build --config Release -j 4
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure -C Release
+
+  docs:
+    name: Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Doxygen
+        run: sudo apt-get update && sudo apt-get install -y doxygen graphviz
+
+      - name: Configure
+        run: cmake -B build -DBUILD_TESTING=OFF -DBUILD_DOCUMENTATION=ON
+
+      - name: Build docs
+        run: cmake --build build --target heuclid-doc
+
+      - name: Check docs generated
+        run: |
+          if [ -d "build/doc/doxygen-html" ]; then
+            echo "✅ Doxygen HTML docs generated"
+            ls build/doc/doxygen-html/ | head -10
+          else
+            echo "❌ No HTML output found"
+            find build/doc -type f 2>/dev/null | head -10
+            exit 1
+          fi

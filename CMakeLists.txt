@@ -1,67 +1,179 @@
-cmake_minimum_required(VERSION 3.0)
-set(PROJECT_NAME Heuclid)
-project(${PROJECT_NAME} VERSION 0.1)
+#
+# Copyright (c) 2026 Junhang Lai (赖俊杭)
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
-find_package(Eigen3 REQUIRED)
-include_directories(${EIGEN3_INCLUDE_DIR})
-message(STATUS "Eigen3 is in ${EIGEN3_INCLUDE_DIR}")
+cmake_minimum_required(VERSION 3.22)
 
-message("Build type is ${CMAKE_BUILD_TYPE}")
+# Project setup
+set(PROJECT_NAME heuclid)
+set(PROJECT_DESCRIPTION
+  "A C++ library for Euclidean geometry, convex hull, and geometric computation"
+)
+set(PROJECT_URL "https://github.com/Mr-tooth/Heuclid")
+set(PROJECT_CUSTOM_HEADER_EXTENSION "h")
+set(PROJECT_USE_CMAKE_EXPORT TRUE)
+set(PROJECT_USE_KEYWORD_LINK_LIBRARIES TRUE)
+set(PROJECT_COMPATIBILITY_VERSION AnyNewerVersion)
+set(PROJECT_AUTO_RUN_FINALIZE FALSE)
 
-add_compile_options(-std=c++14)
-add_compile_options(/MT)
-
-set(ROOT_PATH ..)
-
-include(./cmake/HeuclidConfig.cmake)
-
-include_directories(./include)
-include_directories(./include/Heuclid)
-include_directories(./include/Heuclid/euclid)
-include_directories(./include/Heuclid/geometry)
-include_directories(./include/Heuclid/title)
-
-aux_source_directory(./src/Heuclid/euclid SRC_FILES)
-aux_source_directory(./src/Heuclid/euclid/orientation SRC_FILES)
-aux_source_directory(./src/Heuclid/euclid/tools SRC_FILES)
-aux_source_directory(./src/Heuclid/euclid/tuple2D SRC_FILES)
-aux_source_directory(./src/Heuclid/euclid/tuple3D SRC_FILES)
-aux_source_directory(./src/Heuclid/euclid/tuple4D SRC_FILES)
-aux_source_directory(./src/Heuclid/geometry/tools SRC_FILES)
-aux_source_directory(./src/Heuclid/geometry SRC_FILES)
-
-set(BUILD_TEST 0)
-set(NEED_PLOT 1)
-if(BUILD_TEST)
-    set(CMAKE_BUILD_TYPE Debug)
-    
-    
-    add_executable(test src/Test/test.cpp ${SRC_FILES})
-    if(NEED_PLOT)
-        find_package(matplotlib_cpp REQUIRED)
-        target_link_libraries(test ${matplotlib_LIBS})
-    endif()
+# ---------------------------------------------------------------------------
+# --- jrl-cmakemodules: three-tier lookup -------------------------------
+# 1) Git submodule under cmake/jrl-cmakemodules/
+# 2) System-installed (find_package)
+# 3) FetchContent (auto-download)
+# ---------------------------------------------------------------------------
+set(JRL_CMAKE_MODULES "${CMAKE_CURRENT_LIST_DIR}/cmake/jrl-cmakemodules")
+if(EXISTS "${JRL_CMAKE_MODULES}/base.cmake")
+  message(STATUS "JRL cmakemodules found in 'cmake/jrl-cmakemodules/' (submodule)")
 else()
-    set(CMAKE_BUILD_TYPE Release)
-    add_compile_options(/O2)
-# Build Heuclid static library
-add_library(${LIB_NAME} STATIC ${SRC_FILES})
+  find_package(jrl-cmakemodules QUIET CONFIG)
+  if(jrl-cmakemodules_FOUND)
+    get_property(
+      JRL_CMAKE_MODULES
+      TARGET jrl-cmakemodules::jrl-cmakemodules
+      PROPERTY INTERFACE_INCLUDE_DIRECTORIES
+    )
+    message(STATUS "JRL cmakemodules found on system at ${JRL_CMAKE_MODULES}")
+  else()
+    message(STATUS "JRL cmakemodules not found. Fetching from GitHub...")
+    include(FetchContent)
+    FetchContent_Declare(
+      "jrl-cmakemodules"
+      GIT_REPOSITORY "https://github.com/jrl-umi3218/jrl-cmakemodules.git"
+      GIT_SHALLOW TRUE
+    )
+    FetchContent_MakeAvailable("jrl-cmakemodules")
+    FetchContent_GetProperties("jrl-cmakemodules" SOURCE_DIR JRL_CMAKE_MODULES)
+    message(STATUS "JRL cmakemodules fetched to ${JRL_CMAKE_MODULES}")
+  endif()
 endif()
 
-# Set instal configuration
-message("Install path is ${CMAKE_INSTALL_PREFIX}")
+# Doxygen settings (must be before base.cmake)
+set(DOXYGEN_USE_MATHJAX YES)
+set(DOXYGEN_FILE_PATTERNS "*.h")
+set(DOXYGEN_HTML_OUTPUT "doxygen-html")
+option(BUILD_DOCUMENTATION "Build Doxygen documentation" ON)
+option(INSTALL_DOCUMENTATION "Install Doxygen documentation" OFF)
 
-set(Heuclid_include_dirs ${CMAKE_INSTALL_PREFIX}/include)
-set(Heuclid_link_dirs ${CMAKE_INSTALL_PREFIX}/lib)
-# set(Heuclid_src)
+# ---------------------------------------------------------------------------
+# --- Project declaration ---------------------------------------------------
+# ---------------------------------------------------------------------------
+include("${JRL_CMAKE_MODULES}/base.cmake")
+compute_project_args(PROJECT_ARGS LANGUAGES CXX)
+project(${PROJECT_NAME} ${PROJECT_ARGS})
 
-configure_file(Heuclid.cmake.in ${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/HeuclidConfig.cmake @ONLY)
-   
-install(FILES ${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/HeuclidConfig.cmake DESTINATION share/Heuclid/cmake)
-install(FILES ${PROJECT_BINARY_DIR}/Release/Heuclid.lib DESTINATION lib)
-install(DIRECTORY include/Heuclid DESTINATION include)
+include("${JRL_CMAKE_MODULES}/ide.cmake")
+include("${JRL_CMAKE_MODULES}/apple.cmake")
+# NOTE: Doxygen is handled automatically by base.cmake when BUILD_DOCUMENTATION=ON
 
+apply_default_apple_configuration()
 
-# add test
-add_subdirectory(src/Test)
+# C++ standard: minimum C++11
+check_minimal_cxx_standard(11 ENFORCE)
 
+# ---------------------------------------------------------------------------
+# --- Dependencies ----------------------------------------------------------
+# ---------------------------------------------------------------------------
+# Eigen3: header-only, INTERFACE target. Use FetchContent with version lock.
+find_package(Eigen3 3.3 QUIET CONFIG)
+if(NOT TARGET Eigen3::Eigen)
+  message(STATUS "Eigen3 not found - fetching 3.4.0 via FetchContent")
+  include(FetchContent)
+  FetchContent_Declare(
+    Eigen3
+    GIT_REPOSITORY "https://gitlab.com/libeigen/eigen.git"
+    GIT_TAG "3.4.0"
+    GIT_SHALLOW TRUE
+  )
+  # Eigen3 is header-only — just populate, no add_subdirectory.
+  # This avoids target name conflicts (e.g. 'uninstall') with jrl-cmakemodules.
+  FetchContent_GetProperties(Eigen3)
+  if(NOT eigen3_POPULATED)
+    FetchContent_Populate(Eigen3)
+  endif()
+  # IMPORTED: CMake won't try to export this target
+  add_library(Eigen3::Eigen INTERFACE IMPORTED)
+  set_target_properties(Eigen3::Eigen PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${eigen3_SOURCE_DIR}"
+  )
+  set(Eigen3_FOUND TRUE)
+  set(Eigen3_VERSION "3.4.0")
+  set(_HEUCLID_EIGEN_FETCHED TRUE)
+  message(STATUS "Eigen3 fetched: ${eigen3_SOURCE_DIR}")
+else()
+  message(STATUS "Eigen3 found: ${Eigen3_VERSION}")
+endif()
+
+# Register Eigen3 as a dependency for the generated Config.cmake
+# Skip when Eigen3 was fetched (not found via find_package) to avoid
+# add_project_dependency calling find_package again and failing.
+if(Eigen3_VERSION AND NOT _HEUCLID_EIGEN_FETCHED)
+  add_project_dependency(Eigen3 REQUIRED)
+endif()
+
+# ---------------------------------------------------------------------------
+# --- Options ---------------------------------------------------------------
+# ---------------------------------------------------------------------------
+option(BUILD_TESTING "Build unit tests" ON)
+# BUILD_DOCUMENTATION is set before base.cmake include above
+
+# ---------------------------------------------------------------------------
+# --- Heuclid library (header-only INTERFACE) -------------------------------
+# ---------------------------------------------------------------------------
+add_library(${PROJECT_NAME} INTERFACE)
+add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+
+target_include_directories(
+  ${PROJECT_NAME}
+  INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
+
+target_link_libraries(${PROJECT_NAME} INTERFACE Eigen3::Eigen)
+
+target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_11)
+
+# ---------------------------------------------------------------------------
+# --- Doxygen documentation -------------------------------------------------
+# ---------------------------------------------------------------------------
+# jrl-cmakemodules (base.cmake) automatically creates {PROJECT_NAME}-doc target
+# when BUILD_DOCUMENTATION=ON and Doxygen is found.
+# Customize Doxygen output via DOXYGEN_* variables (set before base.cmake include).
+# To build: cmake --build build --target heuclid-doc
+
+# ---------------------------------------------------------------------------
+# --- Testing ---------------------------------------------------------------
+# ---------------------------------------------------------------------------
+if(BUILD_TESTING)
+  enable_testing()
+  add_subdirectory(src/Test)
+endif()
+
+# ---------------------------------------------------------------------------
+# --- Install ---------------------------------------------------------------
+# ---------------------------------------------------------------------------
+include(GNUInstallDirs)
+
+# Install headers
+install(
+  DIRECTORY include/
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+  FILES_MATCHING
+  PATTERN "*.h"
+)
+
+# Install CMake package configuration
+install(
+  TARGETS ${PROJECT_NAME}
+  EXPORT ${PROJECT_NAME}Targets
+)
+
+# NOTE: Config.cmake, ConfigVersion.cmake, and export install are handled
+# by setup_project_finalize() via jrl-cmakemodules (package-config.cmake).
+
+# ---------------------------------------------------------------------------
+# --- Finalize (generates Doxyfile, pkg-config, coverage, etc.) -------------
+# ---------------------------------------------------------------------------
+setup_project_finalize()

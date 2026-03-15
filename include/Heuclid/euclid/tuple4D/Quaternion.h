@@ -1,15 +1,23 @@
 #pragma once
+/**
+ * @file Quaternion.h
+ * @brief Quaternion representation with Euler angle conversion.
+ * @author Junhang Lai (赖俊杭)
+ */
 
 #include <Heuclid/title/Title.h>
 #include <cmath>
 _LJH_EUCLID_LIB_BEGIN
 /**
- * Class used to represent unit-quaternions 
- * which are used to represent 3D orientations.
- * 
- * s + xi + yj + zk
- * 
- * @author Lai Junhang
+ * @brief Unit quaternion for representing 3D orientations.
+ *
+ * @tparam dataType The scalar type (e.g., double, float).
+ *
+ * Represents rotations as s + xi + yj + zk where the quaternion is always
+ * normalized. Supports Euler angle (ZYX) conversion, conjugation, and
+ * quaternion multiplication.
+ *
+ * Euler angles follow the ZYX convention (yaw-pitch-roll).
  */
 template<typename dataType>
 class Quaternion

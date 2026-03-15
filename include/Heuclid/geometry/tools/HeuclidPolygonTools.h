@@ -1,4 +1,9 @@
 #include <Heuclid/title/Title.h>
+/**
+ * @file HeuclidPolygonTools.h
+ * @brief Polygon utility functions.
+ * @author Junhang Lai (赖俊杭)
+ */
 #include <Heuclid/geometry/ConvexPolygon2D.h>
 #include <Heuclid/geometry/tools/HeuclidGeometryTools.h>
 
@@ -6,10 +11,12 @@
 #define NUM_INEQUAL_VERTEX -2
 #define CHECK_CORRECT 0
 _LJH_EUCLID_LIB_BEGIN
+
 /**
- * This class provides a variety of tools to perform operations with polygons.
+ * @brief Static utility functions for polygon operations.
  *
- * @author Lai Junhang
+ * Provides edge intersection checks, point-in-polygon tests, and other
+ * polygon-specific geometric predicates.
  */
 class HeuclidGeometryPolygonTools
 {

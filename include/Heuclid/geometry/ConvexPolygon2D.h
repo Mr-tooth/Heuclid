@@ -1,9 +1,15 @@
 #pragma once
+/**
+ * @file ConvexPolygon2D.h
+ * @brief 2D convex polygon representation.
+ * @author Junhang Lai (赖俊杭)
+ */
 
 #include <Heuclid/title/Title.h>
 #include <Heuclid/euclid/tuple2D/Point2D.h>
 #include <vector>
 _LJH_EUCLID_LIB_BEGIN
+/** @brief A 2D convex polygon defined by its vertex buffer. */
 class ConvexPolygon2D
 {
 public:

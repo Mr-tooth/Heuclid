@@ -1,4 +1,9 @@
 #pragma once
+/**
+ * @file Pose2D.h
+ * @brief 2D pose (position + orientation).
+ * @author Junhang Lai (赖俊杭)
+ */
 #ifndef __Pose__2D__
 #define __Pose__2D__
 
@@ -14,6 +19,7 @@ _LJH_EUCLID_LIB_BEGIN
  * A {@code Pose2D} represents a position and orientation in the XY-plane.
  */
 template<typename dataType>
+/** @brief A 2D pose (position + orientation). */
 class Pose2D
 {
 private:

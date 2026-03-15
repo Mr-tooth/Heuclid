@@ -1,4 +1,9 @@
 
+/**
+ * @file ConvexHull2D.h
+ * @brief 2D convex hull computation (Graham scan, Gift wrapping).
+ * @author Junhang Lai (赖俊杭)
+ */
 #include <Heuclid/title/Title.h>
 #include <Heuclid/geometry/ConvexPolygon2D.h>
 #include <Heuclid/euclid/tools/HeuclidCoreTool.h>
@@ -46,15 +51,23 @@ public:
         
     };
 
+    /** @brief Compute convex hull and convert to half-space form A*x <= b. */
     void calculateHalfspaceForm(CONVEXHULL_METHOD method);
     
+    /** @brief Load vertices from two rectangles (for bipedal support polygon). */
     void loadRectangleVertex(Rectangle rec1, Rectangle rec2);
+    /** @brief Load a custom set of 2D vertices. */
     void loadVertex(const std::vector<Point2D<DataType>>& _pointList);
-    auto &getA_Matrix() const{return this->A_Matrix;};
-    auto &getb_Matrix() const{return this->b_Matrix;};
-    auto &getAb_Matrix()const{return this->Ab_Matrix;};
-    auto &getNumofVertex()const{return this->numOfPoints;};
-    auto &getPointList() const{return this->pointList;};
+    /** @brief Get the half-space inequality matrix A (A*x <= b). */
+    const Eigen::Matrix<DataType, MatrixRows, 2>& getA_Matrix() const{return this->A_Matrix;};
+    /** @brief Get the half-space inequality vector b (A*x <= b). */
+    const Eigen::Vector<DataType, MatrixRows>& getb_Matrix() const{return this->b_Matrix;};
+    /** @brief Get the combined [A | b] matrix. */
+    const Eigen::Matrix<DataType, MatrixRows, 3>& getAb_Matrix()const{return this->Ab_Matrix;};
+    /** @brief Get the number of hull vertices. */
+    int getNumofVertex()const{return this->numOfPoints;};
+    /** @brief Get the vertex point list. */
+    const std::vector<Point2D<DataType>>& getPointList() const{return this->pointList;};
 private:
     int numOfPoints;
     std::vector<Point2D<DataType>> pointList;
@@ -116,7 +129,7 @@ void ConvexHull2D<DataType, MatrixRows>::computeConvexHullbyGraham_scan()
     // Swap the lowest point with the first point in the array
     std::swap(this->pointList[0], this->pointList[lowestIndex]);
 
-    for(auto & point = this->pointList.begin() +1 ; point != this->pointList.end();point++)
+    for(auto point = this->pointList.begin() +1 ; point != this->pointList.end();point++)
     {
         point->setX(point->getX() - this->pointList[0].getX());
         point->setY(point->getY() - this->pointList[0].getY());
@@ -126,7 +139,7 @@ void ConvexHull2D<DataType, MatrixRows>::computeConvexHullbyGraham_scan()
     // Sort the points based on their polar angle with respect to the lowest point
     std::sort(this->pointList.begin() + 1, this->pointList.end(), comparePoints<DataType>);
 
-    for(auto & point = this->pointList.begin() +1 ; point != this->pointList.end();point++)
+    for(auto point = this->pointList.begin() +1 ; point != this->pointList.end();point++)
     {
         point->setX(point->getX() + this->pointList[0].getX());
         point->setY(point->getY() + this->pointList[0].getY());

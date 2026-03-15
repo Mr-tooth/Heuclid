@@ -1,4 +1,9 @@
 #pragma once
+/** @brief
+ * @file Pose3D.h
+ * @brief 3D pose (position + quaternion orientation).
+ * @author Junhang Lai (赖俊杭)
+ */
 #ifndef __Pose__3D__
 #define __Pose__3D__
 
@@ -9,7 +14,7 @@
 
 _LJH_EUCLID_LIB_BEGIN
 
-/**
+/** @brief
  * A {@code Pose3D} represents a position and orientation in 3 dimensions.
  */
 template<typename dataType>

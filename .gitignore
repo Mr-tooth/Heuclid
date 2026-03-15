@@ -1,36 +1,28 @@
-# Prerequisites
-*.d
+# Build directories
+build/
+_build/
+cmake-build-*/
 
-# Compiled Object files
-*.slo
-*.lo
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Doxygen output
+doc/html/
+doc/latex/
+
+# Compiled
 *.o
 *.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
 *.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-# Cmake Build Folders
-build/
-src/Test/build/
+*.a
+*.so
+*.dll
+*.dylib

@@ -1,4 +1,9 @@
 #pragma once
+/**
+ * @file Orientation2D.h
+ * @brief 2D orientation representation (yaw angle).
+ * @author Junhang Lai (赖俊杭)
+ */
 #ifndef __Orientation__2D__
 #define __Orientation__2D__
 
@@ -8,6 +13,7 @@
 #define _LJH_EUCLID_LIB_END }}
 
 _LJH_EUCLID_LIB_BEGIN
+/** @brief 2D orientation represented as a yaw angle with trigonometric caching. */
 class Orientation2D
 {
 public:

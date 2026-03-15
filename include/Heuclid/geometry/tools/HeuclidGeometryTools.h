@@ -1,4 +1,9 @@
 #pragma once
+/**
+ * @file HeuclidGeometryTools.h
+ * @brief Geometry utility functions (line intersection, etc.).
+ * @author Junhang Lai (赖俊杭)
+ */
 #include <Heuclid/title/Title.h>
 #include <Heuclid/euclid/tuple2D/Point2D.h>
 #include <Heuclid/euclid/tuple2D/Vector2D.h>
@@ -12,6 +17,13 @@
 #endif
 
 _LJH_EUCLID_LIB_BEGIN
+
+/**
+ * @brief Static utility functions for 2D geometric computations.
+ *
+ * Provides line-side tests, point-on-line checks, and other geometric
+ * predicates with configurable epsilon tolerances.
+ */
 class HeuclidGeometryTools
 {
 private:

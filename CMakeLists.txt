@@ -93,9 +93,11 @@ if(NOT TARGET Eigen3::Eigen)
   if(NOT eigen3_POPULATED)
     FetchContent_Populate(Eigen3)
   endif()
-  add_library(Eigen3_Eigen INTERFACE)
-  target_include_directories(Eigen3_Eigen INTERFACE "${eigen3_SOURCE_DIR}")
-  add_library(Eigen3::Eigen ALIAS Eigen3_Eigen)
+  # IMPORTED: CMake won't try to export this target
+  add_library(Eigen3::Eigen INTERFACE IMPORTED)
+  set_target_properties(Eigen3::Eigen PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${eigen3_SOURCE_DIR}"
+  )
   set(Eigen3_FOUND TRUE)
   set(Eigen3_VERSION "3.4.0")
   set(_HEUCLID_EIGEN_FETCHED TRUE)

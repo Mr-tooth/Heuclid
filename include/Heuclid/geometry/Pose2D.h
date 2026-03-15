@@ -19,6 +19,7 @@ _LJH_EUCLID_LIB_BEGIN
  * A {@code Pose2D} represents a position and orientation in the XY-plane.
  */
 template<typename dataType>
+/** @brief A 2D pose (position + orientation). */
 class Pose2D
 {
 private:

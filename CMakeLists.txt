@@ -76,29 +76,26 @@ check_minimal_cxx_standard(11 ENFORCE)
 # ---------------------------------------------------------------------------
 # --- Dependencies ----------------------------------------------------------
 # ---------------------------------------------------------------------------
-# Eigen3: header-only dependency. Use BUILD_INTERFACE so it's not exported.
-# Consumers find Eigen3 via find_dependency() in Config.cmake.
-find_package(Eigen3 QUIET)
+# Eigen3: header-only, INTERFACE target. Use FetchContent with version lock.
+find_package(Eigen3 3.3 QUIET CONFIG)
 if(NOT TARGET Eigen3::Eigen)
-  message(STATUS "Eigen3 not found - fetching from GitHub (master branch)")
+  message(STATUS "Eigen3 not found - fetching 3.4.0 via FetchContent")
   include(FetchContent)
   FetchContent_Declare(
     Eigen3
     GIT_REPOSITORY "https://gitlab.com/libeigen/eigen.git"
-    GIT_TAG "master"
+    GIT_TAG "3.4.0"
     GIT_SHALLOW TRUE
   )
-  FetchContent_GetProperties(Eigen3)
-  if(NOT eigen3_POPULATED)
-    FetchContent_Populate(Eigen3)
-  endif()
-  set(_HEUCLID_EIGEN_INCLUDE_DIR "${eigen3_SOURCE_DIR}")
-  message(STATUS "Eigen3 fetched: ${eigen3_SOURCE_DIR}")
+  FetchContent_MakeAvailable(Eigen3)
+  message(STATUS "Eigen3 fetched via FetchContent")
 else()
-  # Extract include directory from system Eigen3 target
-  get_target_property(_HEUCLID_EIGEN_INCLUDE_DIR Eigen3::Eigen INTERFACE_INCLUDE_DIRECTORIES)
-  message(STATUS "Eigen3 found: ${_HEUCLID_EIGEN_INCLUDE_DIR}")
+  message(STATUS "Eigen3 found: ${Eigen3_VERSION}")
 endif()
+
+# Register Eigen3 as a dependency for the generated Config.cmake
+# (adds find_dependency(Eigen3) to the installed package config)
+add_project_dependency(Eigen3 REQUIRED)
 
 # ---------------------------------------------------------------------------
 # --- Options ---------------------------------------------------------------
@@ -115,9 +112,10 @@ add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_include_directories(
   ${PROJECT_NAME}
   INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-            $<BUILD_INTERFACE:${_HEUCLID_EIGEN_INCLUDE_DIR}>
             $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
+
+target_link_libraries(${PROJECT_NAME} INTERFACE Eigen3::Eigen)
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_11)
 

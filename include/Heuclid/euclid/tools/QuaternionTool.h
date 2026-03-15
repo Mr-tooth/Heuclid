@@ -10,35 +10,47 @@
 #include <Heuclid/euclid/tuple4D/Quaternion.h>
 _LJH_EUCLID_LIB_BEGIN
 
+/**
+ * @name Quaternion multiplication functions
+ * @brief Quaternion multiplication with optional conjugation.
+ *
+ * @tparam dataType The scalar type.
+ * @param q1 First quaternion.
+ * @param q2 Second quaternion.
+ * @param store Output quaternion (q1 * q2 or conjugated variants).
+ */
+///@{
 
+/** @brief Standard quaternion multiplication: store = q1 * q2. */
 template<typename dataType>
 void multiply(const Quaternion<dataType>& q1, const Quaternion<dataType>& q2,  Quaternion<dataType>& store)
 {
     multiplyImpl<dataType>(q1,false,q2,false,store);
 }
 
+/** @brief Multiply with conjugated left: store = q1* * q2. */
 template<typename dataType>
 void multiplyConjugateLeft(const Quaternion<dataType>& q1, const Quaternion<dataType>& q2,  Quaternion<dataType>& store)
 {
     multiplyImpl<dataType>(q1,true,q2,false,store);
 }
 
+/** @brief Multiply with conjugated right: store = q1 * q2*. */
 template<typename dataType>
 void multiplyConjugateRight(const Quaternion<dataType>& q1, const Quaternion<dataType>& q2,  Quaternion<dataType>& store)
 {
     multiplyImpl<dataType>(q1,false,q2,true,store);
 }
 
+/** @brief Multiply with both conjugated: store = q1* * q2*. */
 template<typename dataType>
 void multiplyConjugateBoth(const Quaternion<dataType>& q1, const Quaternion<dataType>& q2,  Quaternion<dataType>& store)
 {
     multiplyImpl<dataType>(q1,true,q2,true,store);
 }
+///@}
 
-
-
-
-
+/** @brief Internal implementation of quaternion multiplication with conjugation flags. */
 template<typename dataType>
 void multiplyImpl(const Quaternion<dataType>& q1,bool conjugateQ1, const Quaternion<dataType>& q2, bool conjugateQ2, Quaternion<dataType>& store)
 {

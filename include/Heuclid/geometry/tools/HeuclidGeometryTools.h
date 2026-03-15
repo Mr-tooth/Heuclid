@@ -17,6 +17,13 @@
 #endif
 
 _LJH_EUCLID_LIB_BEGIN
+
+/**
+ * @brief Static utility functions for 2D geometric computations.
+ *
+ * Provides line-side tests, point-on-line checks, and other geometric
+ * predicates with configurable epsilon tolerances.
+ */
 class HeuclidGeometryTools
 {
 private:

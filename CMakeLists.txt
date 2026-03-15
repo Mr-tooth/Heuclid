@@ -50,10 +50,10 @@ else()
   endif()
 endif()
 
-# Doxygen settings - disable to prevent doc target build failures on CI
+# Doxygen settings (must be before base.cmake)
 set(DOXYGEN_USE_MATHJAX YES)
-set(INSTALL_DOCUMENTATION OFF)
-set(BUILD_DOCUMENTATION OFF)
+option(BUILD_DOCUMENTATION "Build Doxygen documentation" ON)
+option(INSTALL_DOCUMENTATION "Install Doxygen documentation" OFF)
 
 # ---------------------------------------------------------------------------
 # --- Project declaration ---------------------------------------------------
@@ -102,7 +102,7 @@ endif()
 # --- Options ---------------------------------------------------------------
 # ---------------------------------------------------------------------------
 option(BUILD_TESTING "Build unit tests" ON)
-option(BUILD_DOCUMENTATION "Build Doxygen documentation" OFF)
+# BUILD_DOCUMENTATION is set before base.cmake include above
 
 # ---------------------------------------------------------------------------
 # --- Heuclid library (header-only INTERFACE) -------------------------------
@@ -119,8 +119,13 @@ target_include_directories(
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_11)
 
-# Doxygen settings (must be set before base.cmake includes doxygen.cmake)
-# Documentation is auto-generated when BUILD_DOCUMENTATION=ON and Doxygen is found.
+# ---------------------------------------------------------------------------
+# --- Doxygen documentation -------------------------------------------------
+# ---------------------------------------------------------------------------
+# jrl-cmakemodules (base.cmake) automatically creates {PROJECT_NAME}-doc target
+# when BUILD_DOCUMENTATION=ON and Doxygen is found.
+# Customize Doxygen output via DOXYGEN_* variables (set before base.cmake include).
+# To build: cmake --build build --target heuclid-doc
 
 # ---------------------------------------------------------------------------
 # --- Testing ---------------------------------------------------------------

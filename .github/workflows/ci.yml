@@ -14,7 +14,7 @@ on:
 
 jobs:
   build:
-    name: ${{ matrix.os }}
+    name: Build / ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -28,10 +28,38 @@ jobs:
           submodules: recursive
 
       - name: Configure
-        run: cmake -B build -DBUILD_TESTING=ON
+        run: cmake -B build -DBUILD_TESTING=ON -DBUILD_DOCUMENTATION=OFF
 
       - name: Build
         run: cmake --build build --config Release -j 4
 
       - name: Test
         run: ctest --test-dir build --output-on-failure -C Release
+
+  docs:
+    name: Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Doxygen
+        run: sudo apt-get update && sudo apt-get install -y doxygen graphviz
+
+      - name: Configure
+        run: cmake -B build -DBUILD_TESTING=OFF -DBUILD_DOCUMENTATION=ON
+
+      - name: Build docs
+        run: cmake --build build --target heuclid-doc
+
+      - name: Check docs generated
+        run: |
+          if [ -d "build/doc/html" ]; then
+            echo "✅ Doxygen HTML docs generated"
+            ls build/doc/html/ | head -10
+          else
+            echo "⚠️ No HTML output found, checking alternative locations..."
+            find build -name "*.html" -type f | head -5
+          fi

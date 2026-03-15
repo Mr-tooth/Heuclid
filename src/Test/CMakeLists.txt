@@ -1,38 +1,43 @@
-# cmake_minimum_required(VERSION 3.0)
-project(HeuclidTest)
+#
+# Heuclid Tests
+#
+# NOTE: Heuclid is transitioning to header-only. Until all .cpp implementations
+# are moved inline to headers, tests link against the source files directly.
+#
 
-# add_compile_options(/MT /O2)
+# Find GoogleTest
+find_package(GTest QUIET)
 
-# find_package(Heuclid REQUIRED)
-
-# # include_directories(${HEUCLID_INCLUDE_DIRS})
-# message("include ${HEUCLID_INCLUDE_DIRS}")
-# set(BUILD_TEST_LJH 1)
-
-# if(${BUILD_TEST_LJH})
-#     message("--[Test] Build Heuclid basic test!")
-#     add_executable(test test.cpp)
-#     find_package(matplotlib_cpp REQUIRED)
-#     target_link_libraries(test ${matplotlib_LIBS} Heuclid.lib)
-# endif()
-
-
-# 20230612 reconstruct heuclid test with googletest frame
-set(Heuclid_gtest_list
-  TestConvexHull2D
-  TestBeizer
+if(NOT GTest_FOUND)
+  message(STATUS "GoogleTest not found - fetching from GitHub")
+  include(FetchContent)
+  FetchContent_Declare(
+    googletest
+    GIT_REPOSITORY "https://github.com/google/googletest.git"
+    GIT_TAG "v1.14.0"
+    GIT_SHALLOW TRUE
   )
+  set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+  FetchContent_MakeAvailable(googletest)
+  include(GoogleTest)
+endif()
 
-foreach(NAME IN LISTS Heuclid_gtest_list)
-  if(MSVC)
-    find_package(GTest REQUIRED)
-    include(GoogleTest)
-    add_executable(${NAME} ${NAME}.cpp Foot/FootPolygon.cpp ../Heuclid/geometry/ConvexPolygon2D.cpp ../Heuclid/euclid/tools/HeuclidCoreTool.cpp)
-    target_link_libraries(${NAME} GTest::gtest)
-    target_compile_options(${NAME} PUBLIC /MT)
-    gtest_discover_tests(${NAME})
-  endif() 
-endforeach()
+# Heuclid source files (until full header-only migration)
+set(HEUCLID_SOURCES
+  ../Heuclid/euclid/orientation/Orientation2D.cpp
+  ../Heuclid/euclid/tools/HeuclidCoreTool.cpp
+  ../Heuclid/geometry/ConvexPolygon2D.cpp
+  ../Heuclid/geometry/Line2D.cpp
+  ../Heuclid/geometry/tools/HeuclidGeometryTools.cpp
+  ../Heuclid/geometry/tools/HeuclidPolygonTools.cpp
+)
 
-target_include_directories(TestConvexHull2D PUBLIC ./include)
-target_include_directories(TestConvexHull2D PUBLIC ./src/Test/Foot)
+# Test: ConvexHull2D
+add_executable(TestConvexHull2D TestConvexHull2D.cpp Foot/FootPolygon.cpp ${HEUCLID_SOURCES})
+target_link_libraries(TestConvexHull2D PRIVATE heuclid GTest::gtest_main)
+gtest_discover_tests(TestConvexHull2D)
+
+# Test: Bezier curves
+add_executable(TestBeizer TestBeizer.cpp ${HEUCLID_SOURCES})
+target_link_libraries(TestBeizer PRIVATE heuclid GTest::gtest_main)
+gtest_discover_tests(TestBeizer)

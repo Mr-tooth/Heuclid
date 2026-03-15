@@ -116,7 +116,7 @@ void ConvexHull2D<DataType, MatrixRows>::computeConvexHullbyGraham_scan()
     // Swap the lowest point with the first point in the array
     std::swap(this->pointList[0], this->pointList[lowestIndex]);
 
-    for(auto & point = this->pointList.begin() +1 ; point != this->pointList.end();point++)
+    for(auto point = this->pointList.begin() +1 ; point != this->pointList.end();point++)
     {
         point->setX(point->getX() - this->pointList[0].getX());
         point->setY(point->getY() - this->pointList[0].getY());
@@ -126,7 +126,7 @@ void ConvexHull2D<DataType, MatrixRows>::computeConvexHullbyGraham_scan()
     // Sort the points based on their polar angle with respect to the lowest point
     std::sort(this->pointList.begin() + 1, this->pointList.end(), comparePoints<DataType>);
 
-    for(auto & point = this->pointList.begin() +1 ; point != this->pointList.end();point++)
+    for(auto point = this->pointList.begin() +1 ; point != this->pointList.end();point++)
     {
         point->setX(point->getX() + this->pointList[0].getX());
         point->setY(point->getY() + this->pointList[0].getY());

@@ -50,8 +50,10 @@ else()
   endif()
 endif()
 
-# Doxygen settings
+# Doxygen settings - disable to prevent doc target build failures on CI
 set(DOXYGEN_USE_MATHJAX YES)
+set(INSTALL_DOCUMENTATION OFF)
+set(BUILD_DOCUMENTATION OFF)
 
 # ---------------------------------------------------------------------------
 # --- Project declaration ---------------------------------------------------

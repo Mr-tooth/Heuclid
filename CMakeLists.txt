@@ -72,13 +72,12 @@ check_minimal_cxx_standard(11 ENFORCE)
 # ---------------------------------------------------------------------------
 # --- Dependencies ----------------------------------------------------------
 # ---------------------------------------------------------------------------
-# Eigen3: try find_package first, then FetchContent as fallback (headers only)
+# Eigen3: only needed at build time (header-only), not exported
+# Consumers get Eigen3 via find_dependency in Config.cmake
 find_package(Eigen3 QUIET CONFIG)
-if(NOT Eigen3_FOUND)
+if(NOT TARGET Eigen3::Eigen)
   message(STATUS "Eigen3 not found locally - fetching headers from GitHub")
   include(FetchContent)
-  # Eigen is header-only: we only need the headers, not its CMake targets
-  # (which would conflict with jrl-cmakemodules' "uninstall" target)
   FetchContent_Declare(
     Eigen3
     GIT_REPOSITORY "https://gitlab.com/libeigen/eigen.git"
@@ -88,12 +87,13 @@ if(NOT Eigen3_FOUND)
   FetchContent_GetProperties(Eigen3)
   if(NOT eigen3_POPULATED)
     FetchContent_Populate(Eigen3)
-    add_library(Eigen3_Eigen INTERFACE)
-    target_include_directories(Eigen3_Eigen INTERFACE "${eigen3_SOURCE_DIR}")
-    add_library(Eigen3::Eigen ALIAS Eigen3_Eigen)
   endif()
+  add_library(heuclid_Eigen3 INTERFACE)
+  target_include_directories(heuclid_Eigen3 INTERFACE "${eigen3_SOURCE_DIR}")
+  set(_HEUCLID_EIGEN_TARGET heuclid_Eigen3)
   message(STATUS "Eigen3 headers fetched from GitHub")
 else()
+  set(_HEUCLID_EIGEN_TARGET Eigen3::Eigen)
   message(STATUS "Eigen3 found: ${Eigen3_VERSION}")
 endif()
 
@@ -115,7 +115,7 @@ target_include_directories(
             $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
-target_link_libraries(${PROJECT_NAME} INTERFACE Eigen3::Eigen)
+target_link_libraries(${PROJECT_NAME} INTERFACE ${_HEUCLID_EIGEN_TARGET})
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_11)
 

@@ -81,18 +81,24 @@ find_package(Eigen3 3.3 QUIET CONFIG)
 if(NOT TARGET Eigen3::Eigen)
   message(STATUS "Eigen3 not found - fetching 3.4.0 via FetchContent")
   include(FetchContent)
-  # Disable Eigen3's uninstall/doc targets to avoid conflicts with jrl-cmakemodules
-  set(EIGEN_BUILD_UNINSTALL OFF CACHE BOOL "" FORCE)
-  set(EIGEN_BUILD_DOC OFF CACHE BOOL "" FORCE)
-  set(EIGEN_BUILD_TESTING OFF CACHE BOOL "" FORCE)
   FetchContent_Declare(
     Eigen3
     GIT_REPOSITORY "https://gitlab.com/libeigen/eigen.git"
     GIT_TAG "3.4.0"
     GIT_SHALLOW TRUE
   )
-  FetchContent_MakeAvailable(Eigen3)
-  message(STATUS "Eigen3 fetched via FetchContent")
+  # Eigen3 is header-only — just populate, no add_subdirectory.
+  # This avoids target name conflicts (e.g. 'uninstall') with jrl-cmakemodules.
+  FetchContent_GetProperties(Eigen3)
+  if(NOT eigen3_POPULATED)
+    FetchContent_Populate(Eigen3)
+  endif()
+  add_library(Eigen3_Eigen INTERFACE)
+  target_include_directories(Eigen3_Eigen INTERFACE "${eigen3_SOURCE_DIR}")
+  add_library(Eigen3::Eigen ALIAS Eigen3_Eigen)
+  set(Eigen3_FOUND TRUE)
+  set(Eigen3_VERSION "3.4.0")
+  message(STATUS "Eigen3 fetched: ${eigen3_SOURCE_DIR}")
 else()
   message(STATUS "Eigen3 found: ${Eigen3_VERSION}")
 endif()

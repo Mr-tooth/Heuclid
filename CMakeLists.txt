@@ -98,14 +98,18 @@ if(NOT TARGET Eigen3::Eigen)
   add_library(Eigen3::Eigen ALIAS Eigen3_Eigen)
   set(Eigen3_FOUND TRUE)
   set(Eigen3_VERSION "3.4.0")
+  set(_HEUCLID_EIGEN_FETCHED TRUE)
   message(STATUS "Eigen3 fetched: ${eigen3_SOURCE_DIR}")
 else()
   message(STATUS "Eigen3 found: ${Eigen3_VERSION}")
 endif()
 
 # Register Eigen3 as a dependency for the generated Config.cmake
-# (adds find_dependency(Eigen3) to the installed package config)
-add_project_dependency(Eigen3 REQUIRED)
+# Skip when Eigen3 was fetched (not found via find_package) to avoid
+# add_project_dependency calling find_package again and failing.
+if(Eigen3_VERSION AND NOT _HEUCLID_EIGEN_FETCHED)
+  add_project_dependency(Eigen3 REQUIRED)
+endif()
 
 # ---------------------------------------------------------------------------
 # --- Options ---------------------------------------------------------------

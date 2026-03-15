@@ -49,6 +49,10 @@ jobs:
         if: runner.os == 'macOS'
         run: brew install eigen
 
+      - name: Install Eigen (Windows)
+        if: runner.os == 'Windows'
+        run: vcpkg install eigen3:x64-windows
+
       - name: Configure (Unix)
         if: runner.os != 'Windows'
         run: |
@@ -61,7 +65,9 @@ jobs:
 
       - name: Configure (Windows)
         if: runner.os == 'Windows'
-        run: cmake -B build -DBUILD_TESTING=ON
+        run: |
+          cmake -B build -DBUILD_TESTING=ON `
+            -DCMAKE_TOOLCHAIN_FILE="${env:VCPKG_INSTALLATION_ROOT}/scripts/buildsystems/vcpkg.cmake"
 
       - name: Build
         run: cmake --build build --config Release -j $(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 4)

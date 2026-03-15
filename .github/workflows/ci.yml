@@ -22,16 +22,10 @@ jobs:
         include:
           - os: ubuntu-latest
             compiler: gcc
-            cc: gcc
-            cxx: g++
           - os: ubuntu-latest
             compiler: clang
-            cc: clang
-            cxx: clang++
           - os: macos-latest
             compiler: clang
-            cc: clang
-            cxx: clang++
           - os: windows-latest
             compiler: msvc
 
@@ -41,36 +35,13 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install Eigen (Ubuntu)
-        if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y libeigen3-dev
-
-      - name: Install Eigen (macOS)
-        if: runner.os == 'macOS'
-        run: brew install eigen
-
-      - name: Install Eigen (Windows)
-        if: runner.os == 'Windows'
-        run: vcpkg install eigen3:x64-windows
-
-      - name: Configure (Unix)
-        if: runner.os != 'Windows'
-        run: |
-          cmake -B build -DBUILD_TESTING=ON \
-            -DCMAKE_C_COMPILER=${{ matrix.cc }} \
-            -DCMAKE_CXX_COMPILER=${{ matrix.cxx }}
-        env:
-          https_proxy: ""
-          http_proxy: ""
-
-      - name: Configure (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          cmake -B build -DBUILD_TESTING=ON `
-            -DCMAKE_TOOLCHAIN_FILE="${env:VCPKG_INSTALLATION_ROOT}/scripts/buildsystems/vcpkg.cmake"
+      - name: Configure
+        run: cmake -B build -DBUILD_TESTING=ON
 
       - name: Build
-        run: cmake --build build --config Release -j $(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 4)
+        run: cmake --build build --config Release -j ${{ env.NUM_JOBS || '4' }}
+        env:
+          NUM_JOBS: ${{ runner.os == 'Linux' && '$(nproc)' || runner.os == 'macOS' && '$(sysctl -n hw.ncpu)' || '4' }}
 
       - name: Test
         run: ctest --test-dir build --output-on-failure -C Release

@@ -81,6 +81,10 @@ find_package(Eigen3 3.3 QUIET CONFIG)
 if(NOT TARGET Eigen3::Eigen)
   message(STATUS "Eigen3 not found - fetching 3.4.0 via FetchContent")
   include(FetchContent)
+  # Disable Eigen3's uninstall/doc targets to avoid conflicts with jrl-cmakemodules
+  set(EIGEN_BUILD_UNINSTALL OFF CACHE BOOL "" FORCE)
+  set(EIGEN_BUILD_DOC OFF CACHE BOOL "" FORCE)
+  set(EIGEN_BUILD_TESTING OFF CACHE BOOL "" FORCE)
   FetchContent_Declare(
     Eigen3
     GIT_REPOSITORY "https://gitlab.com/libeigen/eigen.git"

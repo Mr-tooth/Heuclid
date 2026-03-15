@@ -51,9 +51,12 @@ public:
         
     };
 
+    /** @brief Compute convex hull and convert to half-space form A*x <= b. */
     void calculateHalfspaceForm(CONVEXHULL_METHOD method);
     
+    /** @brief Load vertices from two rectangles (for bipedal support polygon). */
     void loadRectangleVertex(Rectangle rec1, Rectangle rec2);
+    /** @brief Load a custom set of 2D vertices. */
     void loadVertex(const std::vector<Point2D<DataType>>& _pointList);
     /** @brief Get the half-space inequality matrix A (A*x <= b). */
     const Eigen::Matrix<DataType, MatrixRows, 2>& getA_Matrix() const{return this->A_Matrix;};

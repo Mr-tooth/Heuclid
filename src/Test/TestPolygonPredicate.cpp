@@ -207,3 +207,52 @@ TEST(ConvexPolygonIntersect, NoOverlapRotated)
     auto diamond = makePoly(v, true);
     EXPECT_FALSE(tools.isConvexPolygonIntersect(rect, diamond));
 }
+
+// ===== Intersection Area Tests =====
+
+TEST(ConvexPolygonIntersectionArea, FullOverlap)
+{
+    HeuclidGeometryPolygonTools tools;
+    auto a = makeRect(-1, -1, 2, 2);  // 2×2 square centered at origin
+    auto b = makeRect(-2, -2, 4, 4);  // 4×4 square centered at origin
+    double area = tools.computeConvexPolygonIntersectionArea(a, b);
+    EXPECT_NEAR(area, 4.0, 1e-6);  // a is fully inside b, area = 2×2 = 4
+}
+
+TEST(ConvexPolygonIntersectionArea, HalfOverlap)
+{
+    HeuclidGeometryPolygonTools tools;
+    auto a = makeRect(-1, -1, 2, 2);  // 2×2 square centered at origin
+    auto b = makeRect(0, -1, 2, 2);   // 2×2 square shifted right by 1
+    double area = tools.computeConvexPolygonIntersectionArea(a, b);
+    // Overlap is a 1×2 rectangle: area = 2
+    EXPECT_NEAR(area, 2.0, 1e-6);
+}
+
+TEST(ConvexPolygonIntersectionArea, NoOverlap)
+{
+    HeuclidGeometryPolygonTools tools;
+    auto a = makeRect(-1, -1, 2, 2);
+    auto b = makeRect(10, 10, 2, 2);
+    double area = tools.computeConvexPolygonIntersectionArea(a, b);
+    EXPECT_NEAR(area, 0.0, 1e-6);
+}
+
+TEST(ConvexPolygonIntersectionArea, ShiftedOverlap)
+{
+    HeuclidGeometryPolygonTools tools;
+    auto a = makeRect(-1, -1, 2, 2);  // 2×2 centered at (0,0)
+    auto b = makeRect(-0.5, -1, 2, 2); // 2×2 shifted right by 0.5
+    double area = tools.computeConvexPolygonIntersectionArea(a, b);
+    // Overlap: 1.5×2 = 3.0
+    EXPECT_NEAR(area, 3.0, 1e-6);
+}
+
+TEST(ConvexPolygonIntersectionArea, Identical)
+{
+    HeuclidGeometryPolygonTools tools;
+    auto a = makeRect(-3, -4, 6, 8);  // 6×8 centered at (0,0)
+    auto b = makeRect(-3, -4, 6, 8);
+    double area = tools.computeConvexPolygonIntersectionArea(a, b);
+    EXPECT_NEAR(area, 48.0, 1e-6);  // 6*8 = 48
+}

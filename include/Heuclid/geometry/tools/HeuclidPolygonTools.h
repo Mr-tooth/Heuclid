@@ -82,6 +82,18 @@ public:
      * @return true if polyA ⊆ polyB (all vertices of A are inside B)
      */
     bool isConvexPolygonContained(const ConvexPolygon2D& polyA, const ConvexPolygon2D& polyB);
+
+    /**
+     * @brief Compute the intersection area of two convex polygons.
+     *
+     * Uses Sutherland-Hodgman clipping to compute the intersection polygon,
+     * then calculates its area via the shoelace formula.
+     *
+     * @param polyA first convex polygon
+     * @param polyB second convex polygon
+     * @return intersection area (0.0 if disjoint)
+     */
+    double computeConvexPolygonIntersectionArea(const ConvexPolygon2D& polyA, const ConvexPolygon2D& polyB);
     // int checkNumberOfVertices(const ConvexPolygon2D& convexPolygon2D);
     // int checkEdgeOfIndex(const ConvexPolygon2D& convexPolygon2D, const int& edgeIndex);
 

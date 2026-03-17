@@ -235,4 +235,87 @@ bool HeuclidGeometryPolygonTools::isConvexPolygonIntersect(const ConvexPolygon2D
 
     return false;
 }
+
+double HeuclidGeometryPolygonTools::computeConvexPolygonIntersectionArea(const ConvexPolygon2D& polyA, const ConvexPolygon2D& polyB)
+{
+    const auto& vertsA = polyA.getVertexBuffer();
+    const auto& vertsB = polyB.getVertexBuffer();
+    const int nA = polyA.getNumOfVertices();
+    const int nB = polyB.getNumOfVertices();
+    if(nA < 3 || nB < 3) return 0.0;
+
+    // Sutherland-Hodgman: clip subject polygon (vertsA) against each edge of clip polygon (vertsB)
+    std::vector<Point2D<double>> output(vertsA.begin(), vertsA.end());
+
+    for(int i = 0; i < nB && !output.empty(); i++)
+    {
+        int j = (i + 1) % nB;
+        std::vector<Point2D<double>> input = output;
+        output.clear();
+
+        double edgeX = vertsB[j].getX() - vertsB[i].getX();
+        double edgeY = vertsB[j].getY() - vertsB[i].getY();
+
+        for(int k = 0; k < (int)input.size(); k++)
+        {
+            const auto& cur = input[k];
+            const auto& prev = input[(k + (int)input.size() - 1) % (int)input.size()];
+
+            // Cross product: edge × (point - edgeStart)
+            double curCross = edgeX * (cur.getY() - vertsB[i].getY()) - edgeY * (cur.getX() - vertsB[i].getX());
+            double prevCross = edgeX * (prev.getY() - vertsB[i].getY()) - edgeY * (prev.getX() - vertsB[i].getX());
+
+            bool curInside = curCross <= EPSILON;   // inside or on edge
+            bool prevInside = prevCross <= EPSILON;
+
+            if(curInside && prevInside)
+            {
+                // Both inside — keep cur
+                output.push_back(cur);
+            }
+            else if(!curInside && prevInside)
+            {
+                // Exiting — add intersection
+                double dx2 = cur.getX() - prev.getX();
+                double dy2 = cur.getY() - prev.getY();
+                double denom = edgeX * dy2 - edgeY * dx2;
+                if(std::abs(denom) > EPSILON)
+                {
+                    double t = ((prev.getX() - vertsB[i].getX()) * dy2 - (prev.getY() - vertsB[i].getY()) * dx2) / denom;
+                    Point2D<double> p;
+                    p.setPoint2D(vertsB[i].getX() + t * edgeX, vertsB[i].getY() + t * edgeY);
+                    output.push_back(p);
+                }
+            }
+            else if(curInside && !prevInside)
+            {
+                // Entering — add intersection then cur
+                double dx2 = cur.getX() - prev.getX();
+                double dy2 = cur.getY() - prev.getY();
+                double denom = edgeX * dy2 - edgeY * dx2;
+                if(std::abs(denom) > EPSILON)
+                {
+                    double t = ((prev.getX() - vertsB[i].getX()) * dy2 - (prev.getY() - vertsB[i].getY()) * dx2) / denom;
+                    Point2D<double> p;
+                    p.setPoint2D(vertsB[i].getX() + t * edgeX, vertsB[i].getY() + t * edgeY);
+                    output.push_back(p);
+                }
+                output.push_back(cur);
+            }
+            // else both outside — add nothing
+        }
+    }
+
+    // Shoelace formula for area
+    if((int)output.size() < 3) return 0.0;
+    double area = 0.0;
+    int n = output.size();
+    for(int i = 0; i < n; i++)
+    {
+        int j = (i + 1) % n;
+        area += output[i].getX() * output[j].getY();
+        area -= output[j].getX() * output[i].getY();
+    }
+    return std::abs(area) * 0.5;
+}
 _LJH_EUCLID_LIB_END

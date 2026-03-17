@@ -20,7 +20,7 @@
 
 ## 概述
 
-**Heuclid** 是一个轻量级的 header-only C++ 库，提供基础欧几里得几何原语和算法。基于 [Eigen](https://eigen.tuxfamily.org/) 构建，适用于机器人仿真、运动规划和计算几何应用。
+**Heuclid** 是一个轻量级的静态 C++ 库，提供基础欧几里得几何原语和算法。基于 [Eigen](https://eigen.tuxfamily.org/) 构建，适用于机器人仿真、运动规划和计算几何应用。
 
 ## 特性
 
@@ -28,7 +28,7 @@
 - **凸包计算** — Graham 扫描和 Gift wrapping 算法，支持半空间表达 (A*x ≤ b)
 - **贝塞尔曲线** — N 阶贝塞尔曲线及其解析导数
 - **Eigen 互操作** — Heuclid 类型与 Eigen 矩阵无缝转换
-- **Header-Only** — 无需链接，include 即用
+- **CMake 集成** — 支持 `find_package` 或 FetchContent，链接构建即可使用
 - **C++11 兼容** — 支持所有 C++11 标准编译器
 - **跨平台** — CI 测试覆盖 Linux、macOS、Windows
 

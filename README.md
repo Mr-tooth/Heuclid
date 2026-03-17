@@ -20,7 +20,7 @@
 
 ## Overview
 
-**Heuclid** is a lightweight, header-only C++ library providing fundamental Euclidean geometry primitives and algorithms. Built on [Eigen](https://eigen.tuxfamily.org/), it is designed for robotics simulation, motion planning, and computational geometry applications.
+**Heuclid** is a lightweight static C++ library providing fundamental Euclidean geometry primitives and algorithms. Built on [Eigen](https://eigen.tuxfamily.org/), it is designed for robotics simulation, motion planning, and computational geometry applications.
 
 ## Features
 
@@ -28,7 +28,7 @@
 - **Convex Hull** — Graham scan and Gift wrapping algorithms with half-space representation (A*x ≤ b)
 - **Bézier Curves** — N-th order Bézier with analytical derivatives
 - **Eigen Interoperability** — Seamless conversion between Heuclid types and Eigen matrices
-- **Header-Only** — No linking required, just include and use
+- **CMake Integration** — `find_package(Heuclid)` or FetchContent, link and build
 - **C++11 Compatible** — Works with any C++11-compliant compiler
 - **Cross-Platform** — CI-tested on Linux, macOS, and Windows
 

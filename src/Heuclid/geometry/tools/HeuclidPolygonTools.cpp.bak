@@ -245,16 +245,6 @@ double HeuclidGeometryPolygonTools::computeConvexPolygonIntersectionArea(const C
     if(nA < 3 || nB < 3) return 0.0;
 
     // Sutherland-Hodgman: clip subject polygon (vertsA) against each edge of clip polygon (vertsB)
-    // Use signed area to detect clip polygon winding, then set inside test accordingly.
-    // For CW: interior on right → cross product negative → inside if cross <= EPSILON
-    // For CCW: interior on left → cross product positive → inside if cross >= -EPSILON
-    double signedArea = 0.0;
-    for(int i = 0; i < nB; i++) {
-        int j = (i + 1) % nB;
-        signedArea += vertsB[i].getX() * vertsB[j].getY() - vertsB[j].getX() * vertsB[i].getY();
-    }
-    const bool cwB = signedArea < 0;  // negative signed area = CW
-
     std::vector<Point2D<double>> output(vertsA.begin(), vertsA.end());
 
     for(int i = 0; i < nB && !output.empty(); i++)
@@ -275,9 +265,8 @@ double HeuclidGeometryPolygonTools::computeConvexPolygonIntersectionArea(const C
             double curCross = edgeX * (cur.getY() - vertsB[i].getY()) - edgeY * (cur.getX() - vertsB[i].getX());
             double prevCross = edgeX * (prev.getY() - vertsB[i].getY()) - edgeY * (prev.getX() - vertsB[i].getX());
 
-            // Inside test adapts to clip polygon winding
-            bool curInside = cwB ? (curCross <= EPSILON) : (curCross >= -EPSILON);
-            bool prevInside = cwB ? (prevCross <= EPSILON) : (prevCross >= -EPSILON);
+            bool curInside = curCross <= EPSILON;   // inside or on edge
+            bool prevInside = prevCross <= EPSILON;
 
             if(curInside && prevInside)
             {

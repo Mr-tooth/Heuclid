@@ -55,6 +55,33 @@ public:
 
     int checkNumberOfVertices(std::vector<Point2D<double> > Buffer, int _numOfVertices);
     int checkEdgeOfIndex(int edgeIndex, int _numOfVertices);
+
+    /**
+     * @brief Check if two convex polygons overlap or intersect.
+     *
+     * Uses mutual vertex-in-polygon + edge-midpoint-in-polygon tests
+     * to detect any geometric overlap between the two convex polygons.
+     * If no vertex of either polygon is inside the other and no edge
+     * midpoints overlap, the polygons are disjoint.
+     *
+     * @param polyA first convex polygon
+     * @param polyB second convex polygon
+     * @return true if the two polygons overlap (intersect), false if disjoint
+     */
+    bool isConvexPolygonIntersect(const ConvexPolygon2D& polyA, const ConvexPolygon2D& polyB);
+
+    /**
+     * @brief Check if polyA is fully contained within polyB.
+     *
+     * For convex polygons, containment is verified by checking that all
+     * vertices of polyA are inside polyB. This correctly rejects cases where
+     * polyA straddles polyB's boundary or extends outside polyB.
+     *
+     * @param polyA the candidate contained polygon
+     * @param polyB the containing polygon
+     * @return true if polyA ⊆ polyB (all vertices of A are inside B)
+     */
+    bool isConvexPolygonContained(const ConvexPolygon2D& polyA, const ConvexPolygon2D& polyB);
     // int checkNumberOfVertices(const ConvexPolygon2D& convexPolygon2D);
     // int checkEdgeOfIndex(const ConvexPolygon2D& convexPolygon2D, const int& edgeIndex);
 

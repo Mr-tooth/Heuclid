@@ -28,3 +28,8 @@ gtest_discover_tests(TestConvexHull2D)
 add_executable(TestBeizer TestBeizer.cpp)
 target_link_libraries(TestBeizer PRIVATE heuclid GTest::gtest_main)
 gtest_discover_tests(TestBeizer)
+
+# Test: Polygon predicates (intersect + contained)
+add_executable(TestPolygonPredicate TestPolygonPredicate.cpp)
+target_link_libraries(TestPolygonPredicate PRIVATE heuclid GTest::gtest_main)
+gtest_discover_tests(TestPolygonPredicate)

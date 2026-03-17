@@ -166,4 +166,73 @@ int HeuclidGeometryPolygonTools::checkEdgeOfIndex(int edgeIndex, int _numOfVerti
         return EDAGE_INDEX_OUT;
     return CHECK_CORRECT;
 }
+
+bool HeuclidGeometryPolygonTools::isConvexPolygonContained(const ConvexPolygon2D& polyA, const ConvexPolygon2D& polyB)
+{
+    const std::vector<Point2D<double>> verticesA = polyA.getVertexBuffer();
+    const std::vector<Point2D<double>> verticesB = polyB.getVertexBuffer();
+    const int nA = polyA.getNumOfVertices();
+    const int nB = polyB.getNumOfVertices();
+    const bool cwB = polyB.getClockwiseOrder();
+
+    if(nA == 0 || nB == 0)
+        return false;
+
+    // All vertices of A must be inside B
+    for(int i = 0; i < nA; i++)
+    {
+        if(!this->isPoint2DInsideConvexPolygon2D(verticesA.at(i).getX(), verticesA.at(i).getY(), verticesB, nB, cwB))
+            return false;
+    }
+    return true;
+}
+
+bool HeuclidGeometryPolygonTools::isConvexPolygonIntersect(const ConvexPolygon2D& polyA, const ConvexPolygon2D& polyB)
+{
+    const std::vector<Point2D<double>> verticesA = polyA.getVertexBuffer();
+    const std::vector<Point2D<double>> verticesB = polyB.getVertexBuffer();
+    const int nA = polyA.getNumOfVertices();
+    const int nB = polyB.getNumOfVertices();
+    const bool cwA = polyA.getClockwiseOrder();
+    const bool cwB = polyB.getClockwiseOrder();
+
+    if(nA == 0 || nB == 0)
+        return false;
+
+    // Check if any vertex of A is inside B
+    for(int i = 0; i < nA; i++)
+    {
+        if(this->isPoint2DInsideConvexPolygon2D(verticesA.at(i).getX(), verticesA.at(i).getY(), verticesB, nB, cwB))
+            return true;
+    }
+
+    // Check edge midpoints of A against B (catches edge crossing without vertex containment)
+    for(int i = 0; i < nA; i++)
+    {
+        int j = (i + 1) % nA;
+        double mx = 0.5 * (verticesA.at(i).getX() + verticesA.at(j).getX());
+        double my = 0.5 * (verticesA.at(i).getY() + verticesA.at(j).getY());
+        if(this->isPoint2DInsideConvexPolygon2D(mx, my, verticesB, nB, cwB))
+            return true;
+    }
+
+    // Check if any vertex of B is inside A
+    for(int i = 0; i < nB; i++)
+    {
+        if(this->isPoint2DInsideConvexPolygon2D(verticesB.at(i).getX(), verticesB.at(i).getY(), verticesA, nA, cwA))
+            return true;
+    }
+
+    // Check edge midpoints of B against A
+    for(int i = 0; i < nB; i++)
+    {
+        int j = (i + 1) % nB;
+        double mx = 0.5 * (verticesB.at(i).getX() + verticesB.at(j).getX());
+        double my = 0.5 * (verticesB.at(i).getY() + verticesB.at(j).getY());
+        if(this->isPoint2DInsideConvexPolygon2D(mx, my, verticesA, nA, cwA))
+            return true;
+    }
+
+    return false;
+}
 _LJH_EUCLID_LIB_END

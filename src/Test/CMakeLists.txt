@@ -1,9 +1,6 @@
 #
 # Heuclid Tests
 #
-# NOTE: Heuclid is transitioning to header-only. Until all .cpp implementations
-# are moved inline to headers, tests link against the source files directly.
-#
 
 # Find GoogleTest
 find_package(GTest QUIET)
@@ -22,22 +19,12 @@ if(NOT GTest_FOUND)
   include(GoogleTest)
 endif()
 
-# Heuclid source files (until full header-only migration)
-set(HEUCLID_SOURCES
-  ../Heuclid/euclid/orientation/Orientation2D.cpp
-  ../Heuclid/euclid/tools/HeuclidCoreTool.cpp
-  ../Heuclid/geometry/ConvexPolygon2D.cpp
-  ../Heuclid/geometry/Line2D.cpp
-  ../Heuclid/geometry/tools/HeuclidGeometryTools.cpp
-  ../Heuclid/geometry/tools/HeuclidPolygonTools.cpp
-)
-
 # Test: ConvexHull2D
-add_executable(TestConvexHull2D TestConvexHull2D.cpp Foot/FootPolygon.cpp ${HEUCLID_SOURCES})
+add_executable(TestConvexHull2D TestConvexHull2D.cpp Foot/FootPolygon.cpp)
 target_link_libraries(TestConvexHull2D PRIVATE heuclid GTest::gtest_main)
 gtest_discover_tests(TestConvexHull2D)
 
 # Test: Bezier curves
-add_executable(TestBeizer TestBeizer.cpp ${HEUCLID_SOURCES})
+add_executable(TestBeizer TestBeizer.cpp)
 target_link_libraries(TestBeizer PRIVATE heuclid GTest::gtest_main)
 gtest_discover_tests(TestBeizer)

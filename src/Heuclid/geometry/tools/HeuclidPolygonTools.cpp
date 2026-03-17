@@ -103,14 +103,14 @@ bool HeuclidGeometryPolygonTools::isPoint2DInsideConvexPolygon2D(double pointX, 
         return std::abs(this->crossProduct) < this->EPSILON;
     }
 
-    if(heuclidGeometryTools.isPoint2DOnSideOfLine2D(pointX,pointY,this->edgeStart,this->edgeEnd,clockwiseOrdered))
+    if(this->heuclidGeometryTools.isPoint2DOnSideOfLine2D(pointX,pointY,this->edgeStart,this->edgeEnd,clockwiseOrdered))
         return false;
     
     for (int index = 1;index < numOfVertices;index++)
     {
         this->edgeStart = this->edgeEnd;
         this->edgeEnd = (index+1)<numOfVertices?vertexBuffer.at(index+1):vertexBuffer.at(0);
-        if(heuclidGeometryTools.isPoint2DOnSideOfLine2D(pointX,pointY,this->edgeStart,this->edgeEnd,clockwiseOrdered))
+        if(this->heuclidGeometryTools.isPoint2DOnSideOfLine2D(pointX,pointY,this->edgeStart,this->edgeEnd,clockwiseOrdered))
             return false;
     }
 
@@ -153,30 +153,14 @@ bool HeuclidGeometryPolygonTools::isPoint2DInsideConvexPolygon2D(const ConvexPol
     return this->isPoint2DInsideConvexPolygon2D(pointToCheck.getX(),pointToCheck.getY(),convexPolygon2D.getVertexBuffer(),convexPolygon2D.getNumOfVertices(),convexPolygon2D.getClockwiseOrder());
 }
 
-
-
-
-// int HeuclidGeometryPolygonTools::checkNumberOfVertices(const ConvexPolygon2D& convexPolygon2D)
-// {
-//     if(convexPolygon2D.numOfVertices<0||convexPolygon2D.numOfVertices>convexPolygon2D.vertexBuffer.size())
-//         return NUM_INEQUAL_VERTEX;
-//     return CHECK_CORRECT;
-// }
-
-// int HeuclidGeometryPolygonTools::checkEdgeOfIndex(const ConvexPolygon2D& convexPolygon2D, const int& edgeIndex)
-// {
-//     if(edgeIndex<0||edgeIndex>=convexPolygon2D.numOfVertices)
-//         return EDAGE_INDEX_OUT;
-//     return CHECK_CORRECT;
-// }
-int checkNumberOfVertices(std::vector<Point2D<double> > Buffer, int _numOfVertices)
+int HeuclidGeometryPolygonTools::checkNumberOfVertices(std::vector<Point2D<double> > Buffer, int _numOfVertices)
 {
     if(_numOfVertices < 0 || _numOfVertices>Buffer.size())
         return NUM_INEQUAL_VERTEX;
     return CHECK_CORRECT;
 }
 
-int checkEdgeOfIndex(int edgeIndex, int _numOfVertices)
+int HeuclidGeometryPolygonTools::checkEdgeOfIndex(int edgeIndex, int _numOfVertices)
 {
     if(edgeIndex<0||edgeIndex>=_numOfVertices)
         return EDAGE_INDEX_OUT;

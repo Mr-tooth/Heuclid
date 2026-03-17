@@ -120,20 +120,28 @@ option(BUILD_TESTING "Build unit tests" ON)
 # BUILD_DOCUMENTATION is set before base.cmake include above
 
 # ---------------------------------------------------------------------------
-# --- Heuclid library (header-only INTERFACE) -------------------------------
+# --- Heuclid library (STATIC) ----------------------------------------------
 # ---------------------------------------------------------------------------
-add_library(${PROJECT_NAME} INTERFACE)
+set(HEUCLID_SOURCES
+  src/Heuclid/euclid/orientation/Orientation2D.cpp
+  src/Heuclid/euclid/tools/HeuclidCoreTool.cpp
+  src/Heuclid/geometry/ConvexPolygon2D.cpp
+  src/Heuclid/geometry/Line2D.cpp
+  src/Heuclid/geometry/tools/HeuclidGeometryTools.cpp
+  src/Heuclid/geometry/tools/HeuclidPolygonTools.cpp
+)
+add_library(${PROJECT_NAME} STATIC ${HEUCLID_SOURCES})
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 target_include_directories(
   ${PROJECT_NAME}
-  INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+  PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
-target_link_libraries(${PROJECT_NAME} INTERFACE Eigen3::Eigen)
+target_link_libraries(${PROJECT_NAME} PUBLIC Eigen3::Eigen)
 
-target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_11)
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_11)
 
 # ---------------------------------------------------------------------------
 # --- Doxygen documentation -------------------------------------------------
@@ -164,10 +172,14 @@ install(
   PATTERN "*.h"
 )
 
-# Install CMake package configuration
+# Install library and headers
 install(
   TARGETS ${PROJECT_NAME}
   EXPORT ${PROJECT_NAME}Targets
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
 # NOTE: Config.cmake, ConfigVersion.cmake, and export install are handled

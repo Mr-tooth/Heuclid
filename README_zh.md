@@ -26,6 +26,7 @@
 
 - **2D/3D 基础类型** — 点、向量、单位向量、四元数、位姿
 - **凸包计算** — Graham 扫描和 Gift wrapping 算法，支持半空间表达 (A*x ≤ b)
+- **凸多边形工具** — 点在凸多边形内测试、多边形相交检测（SAT）、包含测试、相交面积计算（Sutherland-Hodgman 裁剪）
 - **贝塞尔曲线** — N 阶贝塞尔曲线及其解析导数
 - **Eigen 互操作** — Heuclid 类型与 Eigen 矩阵无缝转换
 - **CMake 集成** — 支持 `find_package` 或 FetchContent，链接构建即可使用
@@ -114,7 +115,7 @@ auto polygon = hull.getConvexPolygon();
 | 类型 | 说明 |
 |------|------|
 | `ConvexHull2D<T>` | 凸包计算（Graham 扫描 / Gift wrapping） |
-| `ConvexPolygon2D<T>` | 凸多边形，支持包含测试 |
+| `ConvexPolygon2D<T>` | 凸多边形，支持包含测试与相交检测 |
 | `Line2D<T>` | 2D 直线 |
 | `Pose2D<T>` | 2D 位姿（位置 + 朝向） |
 | `Pose3D<T>` | 3D 位姿（位置 + 四元数） |

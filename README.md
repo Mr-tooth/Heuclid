@@ -26,6 +26,7 @@
 
 - **2D/3D Primitives** — Points, vectors, unit vectors, quaternions, poses
 - **Convex Hull** — Graham scan and Gift wrapping algorithms with half-space representation (A*x ≤ b)
+- **Convex Polygon Tools** — Point-in-polygon test, polygon intersection (SAT), polygon containment, intersection area (Sutherland-Hodgman clipping)
 - **Bézier Curves** — N-th order Bézier with analytical derivatives
 - **Eigen Interoperability** — Seamless conversion between Heuclid types and Eigen matrices
 - **CMake Integration** — `find_package(Heuclid)` or FetchContent, link and build
@@ -114,7 +115,7 @@ auto polygon = hull.getConvexPolygon();
 | Type | Description |
 |------|-------------|
 | `ConvexHull2D<T>` | Convex hull computation (Graham scan / Gift wrapping) |
-| `ConvexPolygon2D<T>` | Convex polygon with containment tests |
+| `ConvexPolygon2D<T>` | Convex polygon with containment & intersection tests |
 | `Line2D<T>` | 2D line representation |
 | `Pose2D<T>` | 2D pose (position + orientation) |
 | `Pose3D<T>` | 3D pose (position + quaternion) |

@@ -5,7 +5,7 @@ Thank you for your interest in contributing to Heuclid!
 ## Development Setup
 
 ```bash
-git clone --recursive https://github.com/Mr-tooth/Heuclid.git
+git clone --recursive https://github.com/bitroboticslab/Heuclid.git
 cd Heuclid
 cmake -B build -DBUILD_TESTING=ON
 cmake --build build

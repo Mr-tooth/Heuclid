@@ -4,7 +4,7 @@
 
 **C++ 欧几里得几何与凸包计算库**
 
-[![CI](https://github.com/Mr-tooth/Heuclid/actions/workflows/ci.yml/badge.svg)](https://github.com/Mr-tooth/Heuclid/actions/workflows/ci.yml)
+[![CI](https://github.com/bitroboticslab/Heuclid/actions/workflows/ci.yml/badge.svg)](https://github.com/bitroboticslab/Heuclid/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![C++](https://img.shields.io/badge/C%2B%2B-11%2B-blue.svg)](https://en.cppreference.com/w/cpp/11)
 [![CMake](https://img.shields.io/badge/CMake-3.22%2B-blue.svg)](https://cmake.org/)
@@ -37,7 +37,7 @@
 
 ```bash
 # 克隆（含子模块）
-git clone --recursive https://github.com/Mr-tooth/Heuclid.git
+git clone --recursive https://github.com/bitroboticslab/Heuclid.git
 cd Heuclid
 
 # 构建（自动获取 jrl-cmakemodules 和 GoogleTest）
@@ -200,4 +200,4 @@ cmake --build build --config Release
 
 ---
 
-_本库是 [AStarFootstepPlanner](https://github.com/Mr-tooth/AStarFootstepPlanner) 等机器人项目的依赖库。_
+_本库是 [AStarFootstepPlanner](https://github.com/bitroboticslab/AStarFootstepPlanner) 等机器人项目的依赖库。_

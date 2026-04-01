@@ -4,7 +4,7 @@
 
 **A C++ library for Euclidean geometry, convex hull, and geometric computation**
 
-[![CI](https://github.com/Mr-tooth/Heuclid/actions/workflows/ci.yml/badge.svg)](https://github.com/Mr-tooth/Heuclid/actions/workflows/ci.yml)
+[![CI](https://github.com/bitroboticslab/Heuclid/actions/workflows/ci.yml/badge.svg)](https://github.com/bitroboticslab/Heuclid/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![C++](https://img.shields.io/badge/C%2B%2B-11%2B-blue.svg)](https://en.cppreference.com/w/cpp/11)
 [![CMake](https://img.shields.io/badge/CMake-3.22%2B-blue.svg)](https://cmake.org/)
@@ -37,7 +37,7 @@
 
 ```bash
 # Clone with submodules
-git clone --recursive https://github.com/Mr-tooth/Heuclid.git
+git clone --recursive https://github.com/bitroboticslab/Heuclid.git
 cd Heuclid
 
 # Build (fetches jrl-cmakemodules and GoogleTest automatically)
@@ -203,4 +203,4 @@ Licensed under the [Apache License 2.0](LICENSE).
 
 ---
 
-_This library is a dependency of [AStarFootstepPlanner](https://github.com/Mr-tooth/AStarFootstepPlanner) and other robotics projects._
+_This library is a dependency of [AStarFootstepPlanner](https://github.com/bitroboticslab/AStarFootstepPlanner) and other robotics projects._

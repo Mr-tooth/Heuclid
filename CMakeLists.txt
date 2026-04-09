@@ -11,7 +11,7 @@ set(PROJECT_NAME heuclid)
 set(PROJECT_DESCRIPTION
   "A C++ library for Euclidean geometry, convex hull, and geometric computation"
 )
-set(PROJECT_URL "https://github.com/Mr-tooth/Heuclid")
+set(PROJECT_URL "https://github.com/bitroboticslab/Heuclid")
 set(PROJECT_CUSTOM_HEADER_EXTENSION "h")
 set(PROJECT_USE_CMAKE_EXPORT TRUE)
 set(PROJECT_USE_KEYWORD_LINK_LIBRARIES TRUE)
